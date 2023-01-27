@@ -87,8 +87,6 @@ public class LoginGUI extends JFrame
 		
 		// set up item constraints in the grid
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
 		// gridBagConstraints.insets is used for margins
 		
 		JButton signUpButton = new JButton("Sign Up");
