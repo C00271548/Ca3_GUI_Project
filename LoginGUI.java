@@ -6,24 +6,36 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.plaf.DimensionUIResource;
-import javax.swing.plaf.InsetsUIResource;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JButton;
 
 // class for the login page
+@SuppressWarnings("serial")
 public class LoginGUI extends JFrame
 {
 	// constructor
 	public LoginGUI(String title)
 	{
 		super(title);
+		
 		getContentPane().setLayout(new GridBagLayout());
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		
 		// sets up the two main panels and adds them to the root
-		add(setUpInputPanel());
+		gridBagConstraints.insets.top = 20;
+		gridBagConstraints.insets.left = 20;
+		gridBagConstraints.insets.right = 20;
+		add(setUpInputPanel(), gridBagConstraints);
+		
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.top = 10;
+		gridBagConstraints.insets.bottom = 20;
+		add(setUpButtonPanel(), gridBagConstraints);
+		
 	}
 	
 	// sets up the top panel and components for the input
@@ -34,10 +46,11 @@ public class LoginGUI extends JFrame
 		
 		// set up item constraints in the grid
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
 		gridBagConstraints.anchor = GridBagConstraints.WEST;
-		// gridBagConstrains.insets is used for margins
+		// gridBagConstraints.insets is used for margins
+
+		// set up the size for the input fields
+		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
 		
 		JLabel emailLoginLabel = new JLabel("Email:");
 		gridBagConstraints.insets.top = 5;
@@ -45,7 +58,6 @@ public class LoginGUI extends JFrame
 		inputPanel.add(emailLoginLabel, gridBagConstraints);
 		
 		JTextField emailLoginField = new JTextField();
-		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
 		emailLoginField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
 		gridBagConstraints.insets.top = 0;
@@ -68,9 +80,27 @@ public class LoginGUI extends JFrame
 	}
 	
 	// sets up the bottom panel and components for the buttons
-	private void setUpButtons()
+	private JPanel setUpButtonPanel()
 	{
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new GridBagLayout());
 		
+		// set up item constraints in the grid
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		// gridBagConstraints.insets is used for margins
+		
+		JButton signUpButton = new JButton("Sign Up");
+		gridBagConstraints.insets.left = 5;
+		buttonsPanel.add(signUpButton, gridBagConstraints);
+		
+		JButton loginButton = new JButton("Log In");
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.insets.right = 5;
+		buttonsPanel.add(loginButton, gridBagConstraints);
+		
+		return buttonsPanel;
 	}
 
 	// listener for window closing
