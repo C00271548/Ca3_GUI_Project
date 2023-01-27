@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 
 // class for the login page
@@ -42,6 +43,10 @@ public class SignupGUI extends JFrame
 		add(setUpEmailPanel(), gridBagConstraints);
 		gridBagConstraints.gridy = 3;
 		add(setUpPhonePanel(), gridBagConstraints);
+		gridBagConstraints.gridy = 4;
+		add(setUpContactPanel(), gridBagConstraints);
+		gridBagConstraints.gridy = 4;
+		//add(setUpAddressPanel(), gridBagConstraints);
 	}
 	
 	// set up the panel for the name
@@ -58,7 +63,7 @@ public class SignupGUI extends JFrame
 		// set up the size for the input fields
 		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
 		
-		JLabel forenameLabel = new JLabel("Forename:");
+		JLabel forenameLabel = new JLabel("Forename:*");
 		namePanel.add(forenameLabel, gridBagConstraints);
 		
 		JTextField foreNameField = new JTextField();
@@ -66,7 +71,7 @@ public class SignupGUI extends JFrame
 		gridBagConstraints.gridy = 1;
 		namePanel.add(foreNameField, gridBagConstraints);
 		
-		JLabel surnameLabel = new JLabel("Surname:");
+		JLabel surnameLabel = new JLabel("Surname:*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
 		namePanel.add(surnameLabel, gridBagConstraints);
@@ -94,7 +99,7 @@ public class SignupGUI extends JFrame
 		// set up the size for the input fields
 		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
 		
-		JLabel passwordLabel = new JLabel("Password:");
+		JLabel passwordLabel = new JLabel("Password:*");
 		passwordPanel.add(passwordLabel, gridBagConstraints);
 		
 		JPasswordField passwordField = new JPasswordField();
@@ -102,7 +107,7 @@ public class SignupGUI extends JFrame
 		gridBagConstraints.gridy = 1;
 		passwordPanel.add(passwordField, gridBagConstraints);
 		
-		JLabel confirmPasswordLabel = new JLabel("Confirm:");
+		JLabel confirmPasswordLabel = new JLabel("Confirm:*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
 		passwordPanel.add(confirmPasswordLabel, gridBagConstraints);
@@ -130,7 +135,7 @@ public class SignupGUI extends JFrame
 		// set up the size for the input fields
 		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
 		
-		JLabel emailLabel = new JLabel("Email:");
+		JLabel emailLabel = new JLabel("Email:*");
 		emailPanel.add(emailLabel, gridBagConstraints);
 		
 		JTextField emailField = new JTextField();
@@ -138,7 +143,7 @@ public class SignupGUI extends JFrame
 		gridBagConstraints.gridy = 1;
 		emailPanel.add(emailField, gridBagConstraints);
 		
-		JLabel confirmEmailLabel = new JLabel("Confirm:");
+		JLabel confirmEmailLabel = new JLabel("Confirm:*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
 		emailPanel.add(confirmEmailLabel, gridBagConstraints);
@@ -218,6 +223,26 @@ public class SignupGUI extends JFrame
 		phoneButtonGroup.add(mobilePhoneButton);
 		
 		return phoneRadioButtonPanel;
+	}
+	
+	// set up the panel for the contact checkboxes
+	private JPanel setUpContactPanel()
+	{
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		
+		JPanel contactCheckBoxesPanel = new JPanel();
+		contactCheckBoxesPanel.setLayout(new GridBagLayout());
+		
+		JLabel contactLabel = new JLabel("Contact preference:*");
+		contactCheckBoxesPanel.add(contactLabel, gridBagConstraints);
+		
+		JCheckBox emailContactCheckBox = new JCheckBox("Email");
+		contactCheckBoxesPanel.add(emailContactCheckBox, gridBagConstraints);
+		
+		JCheckBox phoneContactCheckBox = new JCheckBox("Phone");
+		contactCheckBoxesPanel.add(phoneContactCheckBox, gridBagConstraints);
+		
+		return contactCheckBoxesPanel;
 	}
 
 	// listener for window closing
