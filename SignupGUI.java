@@ -24,10 +24,10 @@ import javax.swing.JFormattedTextField;
 
 // class for the login page
 @SuppressWarnings("serial")
-public class SignupGUI extends JFrame
+public class SignUpGUI extends JFrame
 {
 	// constructor
-	public SignupGUI(String title)
+	public SignUpGUI(String title)
 	{
 		super(title);
 		
@@ -51,6 +51,7 @@ public class SignupGUI extends JFrame
 		gridBagConstraints.gridy = 5;
 		add(setUpAddressPanel(), gridBagConstraints);
 		gridBagConstraints.gridy = 6;
+		gridBagConstraints.insets.top = 20;
 		gridBagConstraints.insets.bottom = 20;
 		add(setUpButtonPanel(), gridBagConstraints);
 	}
@@ -67,7 +68,7 @@ public class SignupGUI extends JFrame
 		// gridBagConstraints.insets is used for margins
 		
 		// set up the size for the input fields
-		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
+		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel forenameLabel = new JLabel("Forename*");
 		namePanel.add(forenameLabel, gridBagConstraints);
@@ -80,6 +81,7 @@ public class SignupGUI extends JFrame
 		JLabel surnameLabel = new JLabel("Surname*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
+		gridBagConstraints.insets.left = 10;
 		namePanel.add(surnameLabel, gridBagConstraints);
 		
 		JTextField surnameField = new JTextField();
@@ -103,7 +105,7 @@ public class SignupGUI extends JFrame
 		// gridBagConstraints.insets is used for margins
 		
 		// set up the size for the input fields
-		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
+		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel passwordLabel = new JLabel("Password*");
 		passwordPanel.add(passwordLabel, gridBagConstraints);
@@ -116,6 +118,7 @@ public class SignupGUI extends JFrame
 		JLabel confirmPasswordLabel = new JLabel("Confirm Password*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
+		gridBagConstraints.insets.left = 10;
 		passwordPanel.add(confirmPasswordLabel, gridBagConstraints);
 		
 		JPasswordField confirmPasswordField = new JPasswordField();
@@ -139,7 +142,7 @@ public class SignupGUI extends JFrame
 		// gridBagConstraints.insets is used for margins
 		
 		// set up the size for the input fields
-		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
+		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel emailLabel = new JLabel("Email*");
 		emailPanel.add(emailLabel, gridBagConstraints);
@@ -152,6 +155,7 @@ public class SignupGUI extends JFrame
 		JLabel confirmEmailLabel = new JLabel("Confirm Email*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
+		gridBagConstraints.insets.left = 10;
 		emailPanel.add(confirmEmailLabel, gridBagConstraints);
 		
 		JTextField confirmEmailField = new JTextField();
@@ -200,6 +204,7 @@ public class SignupGUI extends JFrame
 		JLabel phoneTypeLabel = new JLabel("Phone Type");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
+		gridBagConstraints.insets.left = 10;
 		phonePanel.add(phoneTypeLabel, gridBagConstraints);
 		
 		gridBagConstraints.gridx = 1;
@@ -263,7 +268,7 @@ public class SignupGUI extends JFrame
 		// gridBagConstraints.insets is used for margins
 		
 		// set up the size for the input fields
-		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
+		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel addressLabel = new JLabel("Address");
 		addressPanel.add(addressLabel, gridBagConstraints);
@@ -276,19 +281,8 @@ public class SignupGUI extends JFrame
 		addressNameField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 2;
 		addressPanel.add(addressNameField, gridBagConstraints);
-		
-		JLabel addressStreetLabel = new JLabel("Street*");
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 1;
-		addressPanel.add(addressStreetLabel, gridBagConstraints);
-		
-		JTextField addressStreetField = new JTextField();
-		addressStreetField.setPreferredSize(preferredSize);
-		gridBagConstraints.gridy = 2;
-		addressPanel.add(addressStreetField, gridBagConstraints);
-		
+
 		JLabel addressCountryLabel = new JLabel("Country*");
-		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 3;
 		addressPanel.add(addressCountryLabel, gridBagConstraints);
 		
@@ -297,8 +291,18 @@ public class SignupGUI extends JFrame
 		gridBagConstraints.gridy = 4;
 		addressPanel.add(addCountryComboBox, gridBagConstraints);
 		
-		JLabel addressCountyLabel = new JLabel("County*");
+		JLabel addressStreetLabel = new JLabel("Street*");
 		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.left = 10;
+		addressPanel.add(addressStreetLabel, gridBagConstraints);
+		
+		JTextField addressStreetField = new JTextField();
+		addressStreetField.setPreferredSize(preferredSize);
+		gridBagConstraints.gridy = 2;
+		addressPanel.add(addressStreetField, gridBagConstraints);
+		
+		JLabel addressCountyLabel = new JLabel("County*");
 		gridBagConstraints.gridy = 3;
 		addressPanel.add(addressCountyLabel, gridBagConstraints);
 		
@@ -331,6 +335,7 @@ public class SignupGUI extends JFrame
 		
 		JButton loginButton = new JButton("Sign Up");
 		gridBagConstraints.gridx = 1;
+		gridBagConstraints.insets.left = 60;
 		buttonsPanel.add(loginButton, gridBagConstraints);
 		
 		return buttonsPanel;

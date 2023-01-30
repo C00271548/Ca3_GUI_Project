@@ -2,6 +2,8 @@ package ca3_GUI_Project;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,6 +19,9 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class LoginGUI extends JFrame
 {
+	// gives command to the GUIDriver class
+	public int commandInt = 0;
+	
 	// constructor
 	public LoginGUI(String title)
 	{
@@ -50,7 +55,7 @@ public class LoginGUI extends JFrame
 		// gridBagConstraints.insets is used for margins
 
 		// set up the size for the input fields
-		DimensionUIResource preferredSize = new DimensionUIResource(150, 25);
+		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel emailLoginLabel = new JLabel("Email:");
 		gridBagConstraints.insets.top = 5;
@@ -90,12 +95,25 @@ public class LoginGUI extends JFrame
 		// gridBagConstraints.insets is used for margins
 		
 		JButton signUpButton = new JButton("Sign Up");
-		gridBagConstraints.insets.left = 5;
+		signUpButton.addActionListener(new ActionListener()
+		{ 
+			public void actionPerformed(ActionEvent e)
+			{ 
+				commandInt = 1;
+			} 
+		});
 		buttonsPanel.add(signUpButton, gridBagConstraints);
 		
 		JButton loginButton = new JButton("Log In");
+		loginButton.addActionListener(new ActionListener()
+		{ 
+			public void actionPerformed(ActionEvent e)
+			{ 
+				commandInt = 2;
+			} 
+		});
 		gridBagConstraints.gridx = 1;
-		gridBagConstraints.insets.right = 5;
+		gridBagConstraints.insets.left = 20;
 		buttonsPanel.add(loginButton, gridBagConstraints);
 		
 		return buttonsPanel;
