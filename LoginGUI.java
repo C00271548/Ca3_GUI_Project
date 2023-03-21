@@ -8,7 +8,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.plaf.DimensionUIResource;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -17,11 +16,8 @@ import javax.swing.JButton;
 
 // class for the login page
 @SuppressWarnings("serial")
-public class LoginGUI extends JFrame
+public class LoginGUI extends GeneralGUI
 {
-	// gives command to the GUIDriver class
-	public int commandInt = 0;
-	
 	// constructor
 	public LoginGUI(String title)
 	{
@@ -99,7 +95,7 @@ public class LoginGUI extends JFrame
 		{ 
 			public void actionPerformed(ActionEvent e)
 			{ 
-				commandInt = 1;
+				commandString = "OpenSignUp";
 			} 
 		});
 		buttonsPanel.add(signUpButton, gridBagConstraints);
@@ -109,7 +105,7 @@ public class LoginGUI extends JFrame
 		{ 
 			public void actionPerformed(ActionEvent e)
 			{ 
-				commandInt = 2;
+				commandString = "Login";
 			} 
 		});
 		gridBagConstraints.gridx = 1;

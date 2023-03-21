@@ -2,13 +2,14 @@ package ca3_GUI_Project;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
 
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.MaskFormatter;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -24,7 +25,7 @@ import javax.swing.JFormattedTextField;
 
 // class for the login page
 @SuppressWarnings("serial")
-public class SignUpGUI extends JFrame
+public class SignUpGUI extends GeneralGUI
 {
 	// constructor
 	public SignUpGUI(String title)
@@ -330,13 +331,27 @@ public class SignUpGUI extends JFrame
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		// gridBagConstraints.insets is used for margins
 		
-		JButton signUpButton = new JButton("Cancel");
-		buttonsPanel.add(signUpButton, gridBagConstraints);
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener()
+		{ 
+			public void actionPerformed(ActionEvent e)
+			{ 
+				commandString = "CancelSignUp";
+			} 
+		});
+		buttonsPanel.add(cancelButton, gridBagConstraints);
 		
-		JButton loginButton = new JButton("Sign Up");
+		JButton signUpButton = new JButton("Sign Up");
+		signUpButton.addActionListener(new ActionListener()
+		{ 
+			public void actionPerformed(ActionEvent e)
+			{ 
+				commandString = "SignUp";
+			} 
+		});
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.insets.left = 60;
-		buttonsPanel.add(loginButton, gridBagConstraints);
+		buttonsPanel.add(signUpButton, gridBagConstraints);
 		
 		return buttonsPanel;
 	}

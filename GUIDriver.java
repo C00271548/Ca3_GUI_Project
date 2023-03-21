@@ -5,23 +5,36 @@ import java.lang.Thread;
 
 public class GUIDriver
 {
-	private static LoginGUI loginGUI;
-	private static SignUpGUI signUpGUI;
+	private static GeneralGUI currentGUI;
 	
 	public static void main(String[] args)
     {
-		renderLoginGUI();
-		renderSignUpGUI();
-		loginGUI.setVisible(true);
+		// initialise login screen
+		initialiseNewGUI("Login");
 		while (true)
 		{
 			try
 			{
-				System.out.println(loginGUI.commandInt);
-				if (loginGUI.commandInt == 1)
+				// login commands
+				if (currentGUI.commandString.equals("OpenSignUp"))
 				{
-					loginGUI.setVisible(false);
-					signUpGUI.setVisible(true);
+					// open up sign up screen
+					initialiseNewGUI("Sign Up");
+				}
+				else if (currentGUI.commandString.equals("Login"))
+				{
+					// login
+				}
+				// sign up commands
+				else if (currentGUI.commandString.equals("CancelSignUp"))
+				{
+					// cancel sign up
+					initialiseNewGUI("Login");
+				}
+				else if (currentGUI.commandString.equals("SignUp"))
+				{
+					// sign up and update customer table
+					initialiseNewGUI("Login");
 				}
 				Thread.sleep(100);
 			}
@@ -32,23 +45,35 @@ public class GUIDriver
 		}
 	}
 	
-	public static void renderLoginGUI()
+	// make new gui screen
+	private static void initialiseNewGUI(String GUIName)
 	{
-		loginGUI = new LoginGUI("Login");
-		loginGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		loginGUI.pack();
-		loginGUI.setResizable(false);
-		loginGUI.setLocation(500,400);
-		loginGUI.setVisible(false);
-	}
-
-	public static void renderSignUpGUI()
-	{
-		signUpGUI = new SignUpGUI("Sign Up");
-		signUpGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		signUpGUI.pack();
-		signUpGUI.setResizable(false);
-		signUpGUI.setLocation(500,400);
-		signUpGUI.setVisible(false);
+		GeneralGUI tempGUI = null;
+		if (GUIName.equals("Login"))
+		{
+			tempGUI = new LoginGUI(GUIName);
+		}
+		else if (GUIName.equals("Sign Up"))
+		{
+			tempGUI = new SignUpGUI("Sign Up");
+		}
+		else
+		{
+			// error in gui name
+			return;
+		}
+		
+		tempGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		tempGUI.pack();
+		tempGUI.setResizable(false);
+		tempGUI.setLocation(500,400);
+		tempGUI.setVisible(true);
+		
+		// close old gui
+		if (currentGUI != null)
+		{
+			currentGUI.dispose();
+		}
+		currentGUI = tempGUI;
 	}
 }
