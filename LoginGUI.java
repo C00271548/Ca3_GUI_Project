@@ -90,21 +90,21 @@ public class LoginGUI extends GeneralGUI
 		
 		JButton signUpButton = new JButton("Sign Up");
 		signUpButton.addActionListener(new ActionListener()
-		{ 
+		{
 			public void actionPerformed(ActionEvent e)
-			{ 
+			{
 				commandString = "OpenSignUp";
-			} 
+			}
 		});
 		buttonsPanel.add(signUpButton, gridBagConstraints);
 		
 		JButton loginButton = new JButton("Log In");
 		loginButton.addActionListener(new ActionListener()
-		{ 
+		{
 			public void actionPerformed(ActionEvent e)
-			{ 
+			{
 				commandString = "Login";
-			} 
+			}
 		});
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.insets.left = 20;

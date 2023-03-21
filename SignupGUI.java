@@ -5,13 +5,17 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.Arrays;
 
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -218,6 +222,37 @@ public class SignUpGUI extends GeneralGUI
 			e.printStackTrace();
 		}
 		phoneNumberField = new JFormattedTextField(maskFormatter);
+		phoneNumberField.getDocument().addDocumentListener(new DocumentListener()
+		{
+			public void insertUpdate(DocumentEvent event)
+			{
+				checkInput();
+			}
+			public void removeUpdate(DocumentEvent event)
+			{
+				checkInput();
+			}
+			public void changedUpdate(DocumentEvent event)
+			{
+				checkInput();
+			}
+			private void checkInput()
+			{
+				if (checkStringIsDouble(phoneNumberField.getText().replace("-", "")) || phoneNumberField.getText().equals(""))
+				{
+					landlineButton.setEnabled(true);
+					mobilePhoneButton.setEnabled(true);
+					phoneContactCheckBox.setEnabled(true);
+				}
+				else
+				{
+					landlineButton.setEnabled(false);
+					mobilePhoneButton.setEnabled(false);
+					phoneContactCheckBox.setSelected(false);
+					phoneContactCheckBox.setEnabled(false);
+				}
+			}
+		});
 		phoneNumberField.setHorizontalAlignment(JTextField.CENTER);
 		phoneNumberField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
@@ -245,9 +280,12 @@ public class SignUpGUI extends GeneralGUI
 		phoneRadioButtonPanel.setLayout(new GridBagLayout());
 		
 		landlineButton = new JRadioButton("Landline");
+		landlineButton.setSelected(true);
+		landlineButton.setEnabled(false);
 		phoneRadioButtonPanel.add(landlineButton, gridBagConstraints);
 		
 		mobilePhoneButton = new JRadioButton("Mobile Phone");
+		mobilePhoneButton.setEnabled(false);
 		gridBagConstraints.gridx = 1;
 		phoneRadioButtonPanel.add(mobilePhoneButton, gridBagConstraints);
 		
@@ -273,6 +311,7 @@ public class SignUpGUI extends GeneralGUI
 		contactCheckBoxesPanel.add(emailContactCheckBox, gridBagConstraints);
 		
 		phoneContactCheckBox = new JCheckBox("Phone");
+		phoneContactCheckBox.setEnabled(false);
 		contactCheckBoxesPanel.add(phoneContactCheckBox, gridBagConstraints);
 		
 		return contactCheckBoxesPanel;
@@ -341,7 +380,7 @@ public class SignUpGUI extends GeneralGUI
 		gridBagConstraints.gridy = 2;
 		addressPanel.add(addressStreetField, gridBagConstraints);
 		
-		JLabel addressCountyLabel = new JLabel("County*");
+		JLabel addressCountyLabel = new JLabel("Irish County*");
 		gridBagConstraints.gridy = 3;
 		addressPanel.add(addressCountyLabel, gridBagConstraints);
 		
@@ -388,26 +427,112 @@ public class SignUpGUI extends GeneralGUI
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener()
-		{ 
+		{
 			public void actionPerformed(ActionEvent e)
-			{ 
+			{
 				commandString = "CancelSignUp";
-			} 
+			}
 		});
 		buttonsPanel.add(cancelButton, gridBagConstraints);
 		
 		JButton signUpButton = new JButton("Sign Up");
 		signUpButton.addActionListener(new ActionListener()
-		{ 
+		{
 			public void actionPerformed(ActionEvent e)
-			{ 
-				commandString = "SignUp";
-			} 
+			{
+				if (checkAllInputsCorrect())
+				{
+					commandString = "SignUp";
+				}
+			}
 		});
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.insets.left = 60;
 		buttonsPanel.add(signUpButton, gridBagConstraints);
 		
 		return buttonsPanel;
+	}
+	
+	// checks all of the inputs
+	private boolean checkAllInputsCorrect()
+	{
+		// checks if all of the required fields have been input
+		if (forenameField.getText().length() == 0 ||
+			surnameField.getText().length() == 0 ||
+			passwordField.getPassword().length == 0 ||
+			emailField.getText().length() == 0 ||
+			!(emailContactCheckBox.isSelected() || phoneContactCheckBox.isSelected()) ||
+			addressNameField.getText().length() == 0 ||
+			addressCountryComboBox.getSelectedItem().equals("") ||
+			addressStreetField.getText().length() == 0 ||
+			(addressCountryComboBox.getSelectedItem().equals("Ireland") && addressCountyComboBox.getSelectedItem().equals("")))
+		{
+			JOptionPane.showMessageDialog(null, "Input all required* fields!", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+			return false;
+		}
+		
+		// checks if passwords match
+		if (!Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword()))
+		{
+			JOptionPane.showMessageDialog(null, "Passwords do not match!", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+			return false;
+		}
+
+		// checks if emails match
+		if (!emailField.getText().equals(confirmEmailField.getText()))
+		{
+			JOptionPane.showMessageDialog(null, "Emails do not match!", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+			return false;
+		}
+		// checks if emails correct format match
+		if (!emailValidityCheck(emailField.getText()))
+		{
+			JOptionPane.showMessageDialog(null, "Email format incorrect!\nFormat: a@b.c", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+			return false;
+		}
+		
+		// checks if the phone number is in correct format
+		if (!phoneNumberField.getText().equals("XXX-XXX-XXXX"))
+		{
+			if (!checkStringIsDouble(phoneNumberField.getText().replace("-", "")))
+			{
+				JOptionPane.showMessageDialog(null, "Phone number is not a number!", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private boolean emailValidityCheck(String emailString)
+	{
+		String[] emailArrayString = emailString.split("@");
+		// checks for @
+		if (emailArrayString.length != 2)
+		{
+			return false;
+		}
+		// checks for characters before @
+		if (emailArrayString[0].equals(""))
+		{
+			return false;
+		}
+		emailArrayString = emailArrayString[1].split("\\.");
+		// checks for .
+		if (emailArrayString.length != 2)
+		{
+			return false;
+		}
+		// checks for characters before .
+		if (emailArrayString[0].equals(""))
+		{
+			return false;
+		}
+		// checks for characters after .
+		if (emailArrayString[1].equals(""))
+		{
+			return false;
+		}
+		return true;
 	}
 }

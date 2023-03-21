@@ -2,6 +2,7 @@ package ca3_GUI_Project;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 
@@ -33,4 +34,23 @@ public class GeneralGUI extends JFrame
     {
     	System.out.println(x);
     }
+	@SuppressWarnings("unused")
+	public static void print(String[] x)
+    {
+    	System.out.println(Arrays.toString(x));
+    }
+	
+	// checks if string is a double
+	public boolean checkStringIsDouble(String inString)
+	{
+		try
+		{
+			Double.parseDouble(inString);
+			return true;
+		}
+		catch(NumberFormatException e)
+		{
+			return false;
+		}
+	}
 }
