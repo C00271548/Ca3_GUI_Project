@@ -3,6 +3,7 @@ package ca3_GUI_Project;
 import javax.swing.JFrame;
 import java.lang.Thread;
 
+// main driver class
 public class GUIDriver
 {
 	private static GeneralGUI currentGUI;
@@ -76,4 +77,11 @@ public class GUIDriver
 		}
 		currentGUI = tempGUI;
 	}
+	
+	// print
+    @SuppressWarnings("unused")
+	private static void print(Object x)
+    {
+    	System.out.println(x);
+    }
 }

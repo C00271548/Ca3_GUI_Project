@@ -4,8 +4,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.text.ParseException;
 
 import javax.swing.plaf.DimensionUIResource;
@@ -23,10 +21,33 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
-// class for the login page
+// class for the sign up page
 @SuppressWarnings("serial")
 public class SignUpGUI extends GeneralGUI
 {
+	// gui component variables
+	public JTextField forenameField;
+	public JTextField surnameField;
+	
+	public JPasswordField passwordField;
+	public JPasswordField confirmPasswordField;
+	
+	public JTextField emailField;
+	public JTextField confirmEmailField;
+	
+	public JFormattedTextField phoneNumberField;
+	public JRadioButton landlineButton;
+	public JRadioButton mobilePhoneButton;
+	
+	public JCheckBox emailContactCheckBox;
+	public JCheckBox phoneContactCheckBox;
+	
+	public JTextField addressNameField;
+	public JComboBox<String> addressCountryComboBox;
+	public JTextField addressStreetField;
+	public JComboBox<String> addressCountyComboBox;
+	public JSpinner dublinPostalCodeSpinner;
+	
 	// constructor
 	public SignUpGUI(String title)
 	{
@@ -74,10 +95,10 @@ public class SignUpGUI extends GeneralGUI
 		JLabel forenameLabel = new JLabel("Forename*");
 		namePanel.add(forenameLabel, gridBagConstraints);
 		
-		JTextField foreNameField = new JTextField();
-		foreNameField.setPreferredSize(preferredSize);
+		forenameField = new JTextField();
+		forenameField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
-		namePanel.add(foreNameField, gridBagConstraints);
+		namePanel.add(forenameField, gridBagConstraints);
 		
 		JLabel surnameLabel = new JLabel("Surname*");
 		gridBagConstraints.gridx = 1;
@@ -85,7 +106,7 @@ public class SignUpGUI extends GeneralGUI
 		gridBagConstraints.insets.left = 10;
 		namePanel.add(surnameLabel, gridBagConstraints);
 		
-		JTextField surnameField = new JTextField();
+		surnameField = new JTextField();
 		surnameField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
@@ -111,7 +132,7 @@ public class SignUpGUI extends GeneralGUI
 		JLabel passwordLabel = new JLabel("Password*");
 		passwordPanel.add(passwordLabel, gridBagConstraints);
 		
-		JPasswordField passwordField = new JPasswordField();
+		passwordField = new JPasswordField();
 		passwordField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
 		passwordPanel.add(passwordField, gridBagConstraints);
@@ -122,7 +143,7 @@ public class SignUpGUI extends GeneralGUI
 		gridBagConstraints.insets.left = 10;
 		passwordPanel.add(confirmPasswordLabel, gridBagConstraints);
 		
-		JPasswordField confirmPasswordField = new JPasswordField();
+		confirmPasswordField = new JPasswordField();
 		confirmPasswordField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
@@ -148,7 +169,7 @@ public class SignUpGUI extends GeneralGUI
 		JLabel emailLabel = new JLabel("Email*");
 		emailPanel.add(emailLabel, gridBagConstraints);
 		
-		JTextField emailField = new JTextField();
+		emailField = new JTextField();
 		emailField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
 		emailPanel.add(emailField, gridBagConstraints);
@@ -159,7 +180,7 @@ public class SignUpGUI extends GeneralGUI
 		gridBagConstraints.insets.left = 10;
 		emailPanel.add(confirmEmailLabel, gridBagConstraints);
 		
-		JTextField confirmEmailField = new JTextField();
+		confirmEmailField = new JTextField();
 		confirmEmailField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
@@ -196,7 +217,7 @@ public class SignUpGUI extends GeneralGUI
 		{
 			e.printStackTrace();
 		}
-		JFormattedTextField phoneNumberField = new JFormattedTextField(maskFormatter);
+		phoneNumberField = new JFormattedTextField(maskFormatter);
 		phoneNumberField.setHorizontalAlignment(JTextField.CENTER);
 		phoneNumberField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
@@ -223,10 +244,10 @@ public class SignUpGUI extends GeneralGUI
 		JPanel phoneRadioButtonPanel = new JPanel();
 		phoneRadioButtonPanel.setLayout(new GridBagLayout());
 		
-		JRadioButton landlineButton = new JRadioButton("Landline");
+		landlineButton = new JRadioButton("Landline");
 		phoneRadioButtonPanel.add(landlineButton, gridBagConstraints);
 		
-		JRadioButton mobilePhoneButton = new JRadioButton("Mobile Phone");
+		mobilePhoneButton = new JRadioButton("Mobile Phone");
 		gridBagConstraints.gridx = 1;
 		phoneRadioButtonPanel.add(mobilePhoneButton, gridBagConstraints);
 		
@@ -248,10 +269,10 @@ public class SignUpGUI extends GeneralGUI
 		JLabel contactLabel = new JLabel("Contact Preference*");
 		contactCheckBoxesPanel.add(contactLabel, gridBagConstraints);
 		
-		JCheckBox emailContactCheckBox = new JCheckBox("Email");
+		emailContactCheckBox = new JCheckBox("Email");
 		contactCheckBoxesPanel.add(emailContactCheckBox, gridBagConstraints);
 		
-		JCheckBox phoneContactCheckBox = new JCheckBox("Phone");
+		phoneContactCheckBox = new JCheckBox("Phone");
 		contactCheckBoxesPanel.add(phoneContactCheckBox, gridBagConstraints);
 		
 		return contactCheckBoxesPanel;
@@ -278,7 +299,7 @@ public class SignUpGUI extends GeneralGUI
 		gridBagConstraints.gridy = 1;
 		addressPanel.add(addressNameLabel, gridBagConstraints);
 		
-		JTextField addressNameField = new JTextField();
+		addressNameField = new JTextField();
 		addressNameField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 2;
 		addressPanel.add(addressNameField, gridBagConstraints);
@@ -288,9 +309,26 @@ public class SignUpGUI extends GeneralGUI
 		addressPanel.add(addressCountryLabel, gridBagConstraints);
 		
 		String[] countriesArray = {"", "Great Britain", "Ireland", "Northern Ireland", "United States of America"};
-		JComboBox<String> addCountryComboBox = new JComboBox<String>(countriesArray);
+		addressCountryComboBox = new JComboBox<String>(countriesArray);
+		addressCountryComboBox.addActionListener(new ActionListener()
+		{
+			@SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e)
+			{
+				// checks if Ireland is selected
+				if (((JComboBox<String>) e.getSource()).getSelectedItem().equals("Ireland"))
+				{
+					addressCountyComboBox.setEnabled(true);
+				}
+				else
+				{
+					addressCountyComboBox.setEnabled(false);
+					addressCountyComboBox.setSelectedItem("");
+				}
+			}
+		});
 		gridBagConstraints.gridy = 4;
-		addressPanel.add(addCountryComboBox, gridBagConstraints);
+		addressPanel.add(addressCountryComboBox, gridBagConstraints);
 		
 		JLabel addressStreetLabel = new JLabel("Street*");
 		gridBagConstraints.gridx = 1;
@@ -298,7 +336,7 @@ public class SignUpGUI extends GeneralGUI
 		gridBagConstraints.insets.left = 10;
 		addressPanel.add(addressStreetLabel, gridBagConstraints);
 		
-		JTextField addressStreetField = new JTextField();
+		addressStreetField = new JTextField();
 		addressStreetField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 2;
 		addressPanel.add(addressStreetField, gridBagConstraints);
@@ -308,12 +346,29 @@ public class SignUpGUI extends GeneralGUI
 		addressPanel.add(addressCountyLabel, gridBagConstraints);
 		
 		String[] countiesArray = {"", "Antrim", "Armagh", "Carlow", "Cavan", "Clare", "Cork", "Donegal", "Down", "Dublin", "Fermanagh", "Galway", "Kerry", "Kildare", "Kilkenny", "Laois", "Leitrim", "Limerick", "Londonderry", "Longford", "Louth", "Mayo", "Meath", "Monaghan", "Offaly", "Roscommon", "Sligo", "Tiggerary", "Tyrone", "Waterford", "Westmeath", "Wexford", "Wicklow"};
-		JComboBox<String> addressCountyComboBox = new JComboBox<String>(countiesArray);
+		addressCountyComboBox = new JComboBox<String>(countiesArray);
+		addressCountyComboBox.addActionListener(new ActionListener()
+		{
+			@SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e)
+			{
+				// checks if Dublin is selected
+				if (((JComboBox<String>) e.getSource()).getSelectedItem().equals("Dublin"))
+				{
+					dublinPostalCodeSpinner.setEnabled(true);
+				}
+				else
+				{
+					dublinPostalCodeSpinner.setEnabled(false);
+					dublinPostalCodeSpinner.setValue(1);
+				}
+			}
+		});
 		addressCountyComboBox.setEnabled(false);
 		gridBagConstraints.gridy = 4;
 		addressPanel.add(addressCountyComboBox, gridBagConstraints);
 		
-		JSpinner dublinPostalCodeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 24, 1));
+		dublinPostalCodeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 24, 1));
 		dublinPostalCodeSpinner.setEnabled(false);
 		gridBagConstraints.anchor = GridBagConstraints.EAST;
 		addressPanel.add(dublinPostalCodeSpinner, gridBagConstraints);
@@ -354,14 +409,5 @@ public class SignUpGUI extends GeneralGUI
 		buttonsPanel.add(signUpButton, gridBagConstraints);
 		
 		return buttonsPanel;
-	}
-
-	// listener for window closing
-	class WindowCloser extends WindowAdapter
-	{
-		public void windowClosing(WindowEvent evt)
-		{
-			System.exit(0);
-		}
 	}
 }

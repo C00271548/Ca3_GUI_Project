@@ -4,8 +4,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.JPanel;
@@ -18,6 +16,9 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class LoginGUI extends GeneralGUI
 {
+	public JTextField emailLoginField;
+	public JPasswordField passwordLoginField;
+	
 	// constructor
 	public LoginGUI(String title)
 	{
@@ -36,7 +37,6 @@ public class LoginGUI extends GeneralGUI
 		gridBagConstraints.insets.top = 10;
 		gridBagConstraints.insets.bottom = 20;
 		add(setUpButtonPanel(), gridBagConstraints);
-		
 	}
 	
 	// sets up the top panel and components for the input
@@ -54,14 +54,12 @@ public class LoginGUI extends GeneralGUI
 		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel emailLoginLabel = new JLabel("Email:");
-		gridBagConstraints.insets.top = 5;
 		gridBagConstraints.insets.bottom = 5;
 		inputPanel.add(emailLoginLabel, gridBagConstraints);
 		
-		JTextField emailLoginField = new JTextField();
+		emailLoginField = new JTextField();
 		emailLoginField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
-		gridBagConstraints.insets.top = 0;
 		gridBagConstraints.insets.bottom = 10;
 		inputPanel.add(emailLoginField, gridBagConstraints);
 		
@@ -71,7 +69,7 @@ public class LoginGUI extends GeneralGUI
 		gridBagConstraints.insets.bottom = 5;
 		inputPanel.add(passwordLoginLabel, gridBagConstraints);
 		
-		JTextField passwordLoginField = new JPasswordField();
+		passwordLoginField = new JPasswordField();
 		passwordLoginField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 3;
 		gridBagConstraints.insets.bottom = 10;
@@ -113,14 +111,5 @@ public class LoginGUI extends GeneralGUI
 		buttonsPanel.add(loginButton, gridBagConstraints);
 		
 		return buttonsPanel;
-	}
-
-	// listener for window closing
-	class WindowCloser extends WindowAdapter
-	{
-		public void windowClosing(WindowEvent evt)
-		{
-			System.exit(0);
-		}
 	}
 }

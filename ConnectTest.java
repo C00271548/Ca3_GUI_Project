@@ -111,7 +111,8 @@ public class ConnectTest
 			e.printStackTrace();
 		}
     }
-    
+
+	// print
     private static void print(Object x)
     {
     	System.out.println(x);
