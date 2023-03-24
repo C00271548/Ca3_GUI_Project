@@ -11,31 +11,17 @@ public class GUIDriver
 	public static void main(String[] args)
     {
 		// initialise login screen
-		initialiseNewGUI("Login");
+		currentGUI  = new GeneralGUI("Temp");
+		currentGUI.commandString = "Login";
+		initialiseNewGUI();
 		while (true)
 		{
 			try
 			{
-				// login commands
-				if (currentGUI.commandString.equals("OpenSignUp"))
+				// checks if a new gui is set
+				if (!currentGUI.commandString.equals(""))
 				{
-					// open up sign up screen
-					initialiseNewGUI("Sign Up");
-				}
-				else if (currentGUI.commandString.equals("Login"))
-				{
-					// login
-				}
-				// sign up commands
-				else if (currentGUI.commandString.equals("CancelSignUp"))
-				{
-					// cancel sign up
-					initialiseNewGUI("Login");
-				}
-				else if (currentGUI.commandString.equals("SignUp"))
-				{
-					// sign up and update customer table
-					initialiseNewGUI("Login");
+					initialiseNewGUI();
 				}
 				Thread.sleep(100);
 			}
@@ -47,20 +33,30 @@ public class GUIDriver
 	}
 	
 	// make new gui screen
-	private static void initialiseNewGUI(String GUIName)
+	private static void initialiseNewGUI()
 	{
 		GeneralGUI tempGUI = null;
-		if (GUIName.equals("Login"))
+		if (currentGUI.commandString.equals("Login"))
 		{
-			tempGUI = new LoginGUI(GUIName);
+			tempGUI = new LoginGUI();
 		}
-		else if (GUIName.equals("Sign Up"))
+		else if (currentGUI.commandString.equals("Sign Up"))
 		{
-			tempGUI = new SignUpGUI("Sign Up");
+			tempGUI = new SignUpGUI();
 		}
-		else
+		else if (currentGUI.commandString.equals("Admin Products"))
+		{
+			tempGUI = new AdminProductsGUI();
+		}
+		else if (currentGUI.commandString.equals("New Order"))
+		{
+			tempGUI = new NewOrderGUI();
+		}
+		else if (tempGUI == null)
 		{
 			// error in gui name
+			print("Error. Not found:");
+			print(currentGUI.commandString);
 			return;
 		}
 		
@@ -79,7 +75,6 @@ public class GUIDriver
 	}
 	
 	// print
-    @SuppressWarnings("unused")
 	private static void print(Object x)
     {
     	System.out.println(x);

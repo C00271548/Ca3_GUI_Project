@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -30,7 +31,7 @@ public class GeneralGUI extends JFrame
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Cannot connect to database!", "Connection Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -76,7 +77,7 @@ public class GeneralGUI extends JFrame
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e, "Connection Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

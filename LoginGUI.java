@@ -4,10 +4,14 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -20,9 +24,9 @@ public class LoginGUI extends GeneralGUI
 	public JPasswordField passwordLoginField;
 	
 	// constructor
-	public LoginGUI(String title)
+	public LoginGUI()
 	{
-		super(title);
+		super("Login");
 		
 		getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -93,17 +97,31 @@ public class LoginGUI extends GeneralGUI
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				commandString = "OpenSignUp";
+				commandString = "Sign Up";
 			}
 		});
 		buttonsPanel.add(signUpButton, gridBagConstraints);
 		
-		JButton loginButton = new JButton("Log In");
+		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				commandString = "Login";
+				if (checkLogin())
+				{
+					if (emailLoginField.getText().equals("admin"))
+					{
+						commandString = "Admin Products";
+					}
+					else
+					{
+						commandString = "New Order";
+					}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Email or Password Incorrect!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		gridBagConstraints.gridx = 1;
@@ -111,5 +129,34 @@ public class LoginGUI extends GeneralGUI
 		buttonsPanel.add(loginButton, gridBagConstraints);
 		
 		return buttonsPanel;
+	}
+	
+	// chesk if the input data matches a row in the database
+	private boolean checkLogin()
+	{
+		try
+		{
+	        // create a statement using the connection
+			PreparedStatement stmt = conn.prepareStatement("SELECT CustomerID FROM customers WHERE Email = ? AND Password = ?");
+	    	stmt.setString(1, emailLoginField.getText());
+			stmt.setString(2, new String(passwordLoginField.getPassword()));
+
+	    	ResultSet result = stmt.executeQuery();
+	    	if (!result.next())
+	    	{
+				result.close();
+	    		return false;
+	    	}
+			else
+			{
+				result.close();
+	    		return true;
+			}
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, e, "SQL Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 	}
 }

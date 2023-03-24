@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -55,9 +56,9 @@ public class SignUpGUI extends GeneralGUI
 	public JSpinner dublinPostalCodeSpinner;
 	
 	// constructor
-	public SignUpGUI(String title)
+	public SignUpGUI()
 	{
-		super(title);
+		super("Sign Up");
 		
 		getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -221,7 +222,7 @@ public class SignUpGUI extends GeneralGUI
 		}
 		catch (ParseException e)
 		{
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e, "Format Error", JOptionPane.ERROR_MESSAGE);
 		}
 		phoneNumberField = new JFormattedTextField(maskFormatter);
 		phoneNumberField.getDocument().addDocumentListener(new DocumentListener()
@@ -432,7 +433,7 @@ public class SignUpGUI extends GeneralGUI
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				commandString = "CancelSignUp";
+				commandString = "Login";
 			}
 		});
 		buttonsPanel.add(cancelButton, gridBagConstraints);
@@ -445,7 +446,7 @@ public class SignUpGUI extends GeneralGUI
 				if (checkAllInputsCorrect())
 				{
 					addCustomer();
-					commandString = "SignUp";
+					commandString = "Login";
 				}
 			}
 		});
@@ -470,27 +471,33 @@ public class SignUpGUI extends GeneralGUI
 			addressStreetField.getText().length() == 0 ||
 			(addressCountryComboBox.getSelectedItem().equals("Ireland") && addressCountyComboBox.getSelectedItem().equals("")))
 		{
-			JOptionPane.showMessageDialog(null, "Input all required* fields!", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Input all required* fields!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
 		// checks if passwords match
 		if (!Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword()))
 		{
-			JOptionPane.showMessageDialog(null, "Passwords do not match!", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Passwords do not match!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
 		// checks if emails match
 		if (!emailField.getText().equals(confirmEmailField.getText()))
 		{
-			JOptionPane.showMessageDialog(null, "Emails do not match!", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Emails do not match!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		// checks if emails correct format match
 		if (!emailValidityCheck(emailField.getText()))
 		{
-			JOptionPane.showMessageDialog(null, "Email format incorrect!\nFormat: a@b.c", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Email format incorrect!\nFormat: a@b.c", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		// checks if the email is already in use
+		if (emailUsed())
+		{
+			JOptionPane.showMessageDialog(null, "Email already used!", "Duplicate", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
@@ -499,7 +506,7 @@ public class SignUpGUI extends GeneralGUI
 		{
 			if (!checkStringIsDouble(phoneNumberField.getText().replace("-", "")))
 			{
-				JOptionPane.showMessageDialog(null, "Phone number is not a number!", "Incorrect Input", JOptionPane.ERROR_MESSAGE); 
+				JOptionPane.showMessageDialog(null, "Phone number is not a number!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 		}
@@ -537,6 +544,33 @@ public class SignUpGUI extends GeneralGUI
 			return false;
 		}
 		return true;
+	}
+	
+	private boolean emailUsed()
+	{
+		try
+		{
+	        // create a statement using the connection
+			PreparedStatement stmt = conn.prepareStatement("SELECT CustomerID FROM customers WHERE Email = ?");
+	    	stmt.setString(1, emailField.getText());
+
+	    	ResultSet result = stmt.executeQuery();
+	    	if (!result.next())
+	    	{
+				result.close();
+	    		return false;
+	    	}
+			else
+			{
+				result.close();
+	    		return true;
+			}
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, e, "SQL Error", JOptionPane.ERROR_MESSAGE);
+			return true;
+		}
 	}
 	
 	// adds a new customer into the database
@@ -598,7 +632,7 @@ public class SignUpGUI extends GeneralGUI
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e, "SQL Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }
