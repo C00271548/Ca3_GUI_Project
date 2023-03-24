@@ -10,5 +10,4 @@ public class AdminProductsGUI extends GeneralGUI
 	{
 		super("Admin Products");
 	}
-
 }

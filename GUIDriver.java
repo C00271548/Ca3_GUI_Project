@@ -50,7 +50,23 @@ public class GUIDriver
 		}
 		else if (currentGUI.commandString.equals("New Order"))
 		{
-			tempGUI = new NewOrderGUI();
+			tempGUI = new CustomerNewOrderGUI();
+		}
+		else if (currentGUI.commandString.equals("Admin Orders"))
+		{
+			tempGUI = new AdminOrdersGUI();
+		}
+		else if (currentGUI.commandString.equals("Customer Orders"))
+		{
+			tempGUI = new CustomerOrdersGUI();
+		}
+		else if (currentGUI.commandString.equals("Admin Invoices"))
+		{
+			tempGUI = new AdminInvoicesGUI();
+		}
+		else if (currentGUI.commandString.equals("Customer Invoices"))
+		{
+			tempGUI = new CustomerInvoicesGUI();
 		}
 		else if (tempGUI == null)
 		{
