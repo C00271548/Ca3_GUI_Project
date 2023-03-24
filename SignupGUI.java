@@ -4,6 +4,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Arrays;
 
@@ -442,6 +444,7 @@ public class SignUpGUI extends GeneralGUI
 			{
 				if (checkAllInputsCorrect())
 				{
+					addCustomer();
 					commandString = "SignUp";
 				}
 			}
@@ -534,5 +537,68 @@ public class SignUpGUI extends GeneralGUI
 			return false;
 		}
 		return true;
+	}
+	
+	// adds a new customer into the database
+	private void addCustomer()
+	{
+		try
+		{
+	        // create a statement using the connection
+			PreparedStatement stmt = conn.prepareStatement("""
+															  INSERT INTO customers (Forename, Surname, Email, PhoneNumber,
+																				     PhoneNumberType, ContactType, Password, AddressName,
+																				     AddressStreet, AddressCounty, AddressCountry)
+															  VALUES (?, ?, ?, ?,
+															  		  ?, ?, ?, ?,
+																	  ?, ?, ?)""");
+			
+	    	stmt.setString(1, forenameField.getText());
+	    	stmt.setString(2, surnameField.getText());
+	    	stmt.setString(3, emailField.getText());
+			stmt.setString(4, phoneNumberField.getText());
+			if (landlineButton.isSelected())
+			{
+				stmt.setString(5, "Landline");
+			}
+			else
+			{
+				stmt.setString(5, "Mobile");
+			}
+			if (emailContactCheckBox.isSelected())
+			{
+				if (phoneContactCheckBox.isSelected())
+				{
+					stmt.setString(6, "Both");
+				}
+				else
+				{
+					stmt.setString(6, "Email");
+				}
+			}
+			else if (phoneContactCheckBox.isSelected())
+			{
+				stmt.setString(6, "Phone");
+			}
+			stmt.setString(7, new String(passwordField.getPassword()));
+	    	stmt.setString(8, addressNameField.getText());
+	    	stmt.setString(9, addressStreetField.getText());
+			String county =  (String) addressCountyComboBox.getSelectedItem();
+			if (county.equals("Dublin"))
+			{
+				stmt.setString(10, county + " " + dublinPostalCodeSpinner.getValue());
+			}
+			else
+			{
+				stmt.setString(10, county);
+			}
+	    	stmt.setString(11, (String) addressCountryComboBox.getSelectedItem());
+
+	    	stmt.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

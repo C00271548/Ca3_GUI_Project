@@ -6,6 +6,10 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.DriverManager;
+
 // parent class for all gui classes
 @SuppressWarnings("serial")
 public class GeneralGUI extends JFrame
@@ -13,10 +17,21 @@ public class GeneralGUI extends JFrame
 	// gives command to the GUIDriver class
 	public String commandString = "";
 	
+	// database connection
+	Connection conn = null;
+	
 	public GeneralGUI(String title)
 	{
 		super(title);
 		addWindowListener(new WindowCloser());
+		try
+		{
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/project_database","root", "");
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	// listener for window closing
@@ -29,12 +44,10 @@ public class GeneralGUI extends JFrame
 	}
 	
 	// print
-    @SuppressWarnings("unused")
-	public static void print(Object x)
+    public static void print(Object x)
     {
     	System.out.println(x);
     }
-	@SuppressWarnings("unused")
 	public static void print(String[] x)
     {
     	System.out.println(Arrays.toString(x));
@@ -51,6 +64,19 @@ public class GeneralGUI extends JFrame
 		catch(NumberFormatException e)
 		{
 			return false;
+		}
+	}
+	
+	// called before getting garbage collected
+	protected void finalize()
+	{
+		try
+		{
+			conn.close();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }
