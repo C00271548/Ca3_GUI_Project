@@ -7,6 +7,7 @@ import java.lang.Thread;
 public class GUIDriver
 {
 	private static GeneralGUI currentGUI;
+	private static String emailLoggedIn = null;
 	
 	public static void main(String[] args)
     {
@@ -39,6 +40,7 @@ public class GUIDriver
 		if (currentGUI.commandString.equals("Login"))
 		{
 			tempGUI = new LoginGUI();
+			emailLoggedIn = "";
 		}
 		else if (currentGUI.commandString.equals("Sign Up"))
 		{
@@ -47,14 +49,23 @@ public class GUIDriver
 		else if (currentGUI.commandString.equals("Admin Products"))
 		{
 			tempGUI = new AdminProductsGUI();
+			emailLoggedIn = ((LoginGUI) currentGUI).emailLoginField.getText();
 		}
 		else if (currentGUI.commandString.equals("New Order"))
 		{
 			tempGUI = new CustomerNewOrderGUI();
+			if (currentGUI instanceof LoginGUI)
+			{
+				emailLoggedIn = ((LoginGUI) currentGUI).emailLoginField.getText();
+			}
 		}
 		else if (currentGUI.commandString.equals("Admin Orders"))
 		{
 			tempGUI = new AdminOrdersGUI();
+			if (currentGUI instanceof LoginGUI)
+			{
+				emailLoggedIn = ((LoginGUI) currentGUI).emailLoginField.getText();
+			}
 		}
 		else if (currentGUI.commandString.equals("Customer Orders"))
 		{
