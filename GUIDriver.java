@@ -13,7 +13,7 @@ public class GUIDriver
     {
 		// initialise login screen
 		currentGUI  = new GeneralGUI("Temp", "");
-		currentGUI.commandString = "Customer Orders";
+		currentGUI.commandString = "Admin Orders";
 		initialiseNewGUI();
 		while (true)
 		{

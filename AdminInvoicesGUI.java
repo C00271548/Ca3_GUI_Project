@@ -204,6 +204,7 @@ public class AdminInvoicesGUI extends GeneralGUI
 		pack();
 	}
 	
+	// updates the selected rows paid in database
 	private void updateInvoicesPaid()
 	{
 		int[] selectedRowsIndexes = invoicesTable.getSelectedRows();
