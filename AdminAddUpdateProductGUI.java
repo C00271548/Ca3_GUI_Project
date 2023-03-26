@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -18,7 +19,7 @@ import javax.swing.plaf.DimensionUIResource;
 
 //class for the admin add new product page
 @SuppressWarnings("serial")
-public class AdminAddNewProductGUI extends GeneralGUI
+public class AdminAddUpdateProductGUI extends GeneralGUI
 {
 	private JTextField nameField;
 	private JTextArea descriptionTextArea;
@@ -26,8 +27,10 @@ public class AdminAddNewProductGUI extends GeneralGUI
 	private JTextField sellingPriceField;
 	private JTextField reorderLevelField;
 	
+	private int productID = 0;
+	
 	// constructor
-	public AdminAddNewProductGUI(String email)
+	public AdminAddUpdateProductGUI(String email)
 	{
 		super("Admin Add New Product", email);
 		
@@ -46,6 +49,30 @@ public class AdminAddNewProductGUI extends GeneralGUI
 		gridBagConstraints.gridwidth = 2;
 		gridBagConstraints.insets.bottom = 20;
 		add(setUpButtonsPanel(), gridBagConstraints);
+	}
+	
+	public AdminAddUpdateProductGUI(String email, int productID)
+	{
+		super("Admin Add New Product", email);
+		
+		getContentPane().setLayout(new GridBagLayout());
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.insets.top = 20;
+		gridBagConstraints.insets.left = 20;
+		gridBagConstraints.insets.right = 20;
+		
+		// set up the panels for the page and add them
+		add(setUpLeftPanel(), gridBagConstraints);
+		gridBagConstraints.gridx = 1;
+		add(setUpDescriptionPanel(), gridBagConstraints);
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridwidth = 2;
+		gridBagConstraints.insets.bottom = 20;
+		add(setUpButtonsPanel2(), gridBagConstraints);
+		
+		this.productID = productID;
+		populateFields();
 	}
 	
 	// set up the left panel
@@ -244,6 +271,44 @@ public class AdminAddNewProductGUI extends GeneralGUI
 		return buttonsPanel;
 	}
 	
+	private JPanel setUpButtonsPanel2()
+	{
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new GridBagLayout());
+		
+		// set up item constraints in the grid
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		// gridBagConstraints.insets is used for margins
+		
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				commandString = "Admin Products";
+			}
+		});
+		buttonsPanel.add(cancelButton, gridBagConstraints);
+		
+		JButton addNewProductButton = new JButton("Update Product");
+		addNewProductButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (checkAllInputsCorrect())
+				{
+					updateProduct();
+					commandString = "Admin Products";
+				}
+			}
+		});
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.insets.left = 60;
+		buttonsPanel.add(addNewProductButton, gridBagConstraints);
+		
+		return buttonsPanel;
+	}
+	
 	// checks all of the inputs
 	private boolean checkAllInputsCorrect()
 	{
@@ -299,6 +364,57 @@ public class AdminAddNewProductGUI extends GeneralGUI
 			stmt.setInt(5, Integer.parseInt(reorderLevelField.getText()));
 			
 	    	stmt.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, e, "SQL Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	// updates a product in the database
+	private void updateProduct()
+	{
+		try
+		{
+	        // create a statement using the connection
+			PreparedStatement stmt = conn.prepareStatement("""
+															  UPDATE products SET Name = ?, Description = ?, StockAmount = ?, SellingPrice = ?, ReorderLevel = ?
+															  WHERE productID = ?""");
+			
+	    	stmt.setString(1, nameField.getText());
+	    	stmt.setString(2, descriptionTextArea.getText());
+	    	stmt.setInt(3, Integer.parseInt(stockAmountField.getText()));
+			stmt.setDouble(4, Math.round(Double.parseDouble(sellingPriceField.getText()) * 100) / 100.0);
+			stmt.setInt(5, Integer.parseInt(reorderLevelField.getText()));
+			stmt.setInt(6, productID);
+			
+	    	stmt.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, e, "SQL Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	// populates all the fields with data from the database
+	private void populateFields()
+	{
+		try
+		{
+	        // create a statement using the connection
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM products WHERE ProductID = ?");
+			stmt.setInt(1, productID);
+			
+	    	ResultSet result = stmt.executeQuery();
+			if (result.next())
+			{
+				nameField.setText(result.getString("Name"));
+				descriptionTextArea.setText(result.getString("Description"));
+				stockAmountField.setText(result.getString("StockAmount"));
+				sellingPriceField.setText(result.getString("SellingPrice"));
+				reorderLevelField.setText(result.getString("ReorderLevel"));
+			}
+			result.close();
 		}
 		catch (SQLException e)
 		{

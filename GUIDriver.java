@@ -80,11 +80,11 @@ public class GUIDriver
 		}
 		else if (currentGUI.commandString.equals("Admin Add New Product"))
 		{
-			tempGUI = new AdminAddNewProductGUI(emailLoggedIn);
+			tempGUI = new AdminAddUpdateProductGUI(emailLoggedIn);
 		}
 		else if (currentGUI.commandString.equals("Admin Update Product"))
 		{
-			tempGUI = new AdminUpdateProductGUI(emailLoggedIn, ((AdminProductsGUI) currentGUI).productID);
+			tempGUI = new AdminAddUpdateProductGUI(emailLoggedIn, ((AdminProductsGUI) currentGUI).productID);
 		}
 		else if (tempGUI == null)
 		{
