@@ -11,11 +11,12 @@ public class GUIDriver
 {
 	private static GeneralGUI currentGUI;
 	private static String emailLoggedIn = null;
+	private static String[][] orderProductsData = null;
 	
 	public static void main(String[] args)
     {
 		// initialise login screen
-		currentGUI  = new GeneralGUI("Temp", "");
+		currentGUI = new GeneralGUI("Temp", "");
 		currentGUI.commandString = "Login";
 		initialiseNewGUI();
 		while (true)
@@ -57,9 +58,9 @@ public class GUIDriver
 				emailLoggedIn = ((LoginGUI) currentGUI).emailLoginField.getText();
 			}
 		}
-		else if (currentGUI.commandString.equals("New Order"))
+		else if (currentGUI.commandString.equals("Customer New Order"))
 		{
-			tempGUI = new CustomerNewOrderGUI(emailLoggedIn);
+			tempGUI = new CustomerNewOrderGUI(emailLoggedIn, orderProductsData);
 			if (currentGUI instanceof LoginGUI)
 			{
 				emailLoggedIn = ((LoginGUI) currentGUI).emailLoginField.getText();
@@ -89,6 +90,10 @@ public class GUIDriver
 		{
 			tempGUI = new AdminAddUpdateProductGUI(emailLoggedIn, ((AdminProductsGUI) currentGUI).productID);
 		}
+		else if (currentGUI.commandString.equals("Customer Add Product"))
+		{
+			tempGUI = new CustomerAddProductGUI(emailLoggedIn, orderProductsData);
+		}
 		else if (tempGUI == null)
 		{
 			// error in gui name
@@ -110,8 +115,8 @@ public class GUIDriver
 		{
 			location = new Point(0, 0);
 		}
-		int middleX = (int) Math.round(location.x + (currentGUI.getSize().width / 2.0));
-		int newX = (int) Math.round(middleX - (tempGUI.getSize().width / 2.0));
+		Double middleX = location.x + (currentGUI.getSize().width / 2.0);
+		int newX = (int) (middleX - (tempGUI.getSize().width / 2.0));
 		
 		if (newX < 0)
 		{
@@ -124,6 +129,14 @@ public class GUIDriver
 		// close old gui
 		if (currentGUI != null)
 		{
+			if (currentGUI instanceof CustomerNewOrderGUI)
+			{
+				orderProductsData = ((CustomerNewOrderGUI) currentGUI).orderProductsData;
+			}
+			else if (currentGUI instanceof CustomerAddProductGUI)
+			{
+				orderProductsData = ((CustomerAddProductGUI) currentGUI).orderProductsData;
+			}
 			currentGUI.dispose();
 		}
 		currentGUI = tempGUI;

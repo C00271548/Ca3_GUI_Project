@@ -115,7 +115,7 @@ public class LoginGUI extends GeneralGUI
 					}
 					else
 					{
-						commandString = "New Order";
+						commandString = "Customer New Order";
 					}
 				}
 				else
