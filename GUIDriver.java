@@ -1,6 +1,9 @@
 package ca3_GUI_Project;
 
 import javax.swing.JFrame;
+
+import java.awt.IllegalComponentStateException;
+import java.awt.Point;
 import java.lang.Thread;
 
 // main driver class
@@ -97,7 +100,25 @@ public class GUIDriver
 		tempGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		tempGUI.pack();
 		tempGUI.setResizable(false);
-		tempGUI.setLocation(500,400);
+		
+		Point location;
+		try
+		{
+			location = currentGUI.getLocationOnScreen();
+		}
+		catch (IllegalComponentStateException e)
+		{
+			location = new Point(0, 0);
+		}
+		int middleX = (int) Math.round(location.x + (currentGUI.getSize().width / 2.0));
+		int newX = (int) Math.round(middleX - (tempGUI.getSize().width / 2.0));
+		
+		if (newX < 0)
+		{
+			newX = 0;
+		}
+		
+		tempGUI.setLocation(newX, location.y);
 		tempGUI.setVisible(true);
 		
 		// close old gui
