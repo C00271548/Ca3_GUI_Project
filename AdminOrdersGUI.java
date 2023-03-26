@@ -321,7 +321,12 @@ public class AdminOrdersGUI extends GeneralGUI
 				{
 					stmt.setInt(1, 1);
 				}
-				stmt.setInt(2, Integer.parseInt((String) ordersTable.getValueAt(rowIndex, 0)));
+				int orderID = 0;
+				if (ordersTable != null && ordersTable.getSelectedRow() != -1 && (String) ordersTable.getValueAt(ordersTable.getSelectedRow(), 0) != "No Orders")
+				{
+					orderID = Integer.parseInt((String) ordersTable.getValueAt(rowIndex, 0));
+				}
+				stmt.setInt(2, orderID);
 
 				stmt.executeUpdate();
 			}
@@ -335,12 +340,16 @@ public class AdminOrdersGUI extends GeneralGUI
 	// deletes the selected row from the database
 	private void deleteOrder()
 	{
-		int rowIndex = ordersTable.getSelectedRow();
 		try
 		{
 			// create a statement using the connection
 			PreparedStatement stmt = conn.prepareStatement("DELETE FROM orders WHERE orderID = ?");
-			stmt.setInt(1, Integer.parseInt((String) ordersTable.getValueAt(rowIndex, 0)));
+			int orderID = 0;
+			if (ordersTable != null && ordersTable.getSelectedRow() != -1 && (String) ordersTable.getValueAt(ordersTable.getSelectedRow(), 0) != "No Orders")
+			{
+				orderID = Integer.parseInt((String) ordersTable.getValueAt(ordersTable.getSelectedRow(), 0));
+			}
+			stmt.setInt(1, orderID);
 
 			stmt.executeUpdate();
 		}

@@ -222,7 +222,12 @@ public class AdminInvoicesGUI extends GeneralGUI
 				{
 					stmt.setInt(1, 1);
 				}
-				stmt.setInt(2, Integer.parseInt((String) invoicesTable.getValueAt(rowIndex, 0)));
+				int invoicesID = 0;
+				if (invoicesTable != null && invoicesTable.getSelectedRow() != -1 && (String) invoicesTable.getValueAt(invoicesTable.getSelectedRow(), 0) != "No Invoices")
+				{
+					invoicesID = Integer.parseInt((String) invoicesTable.getValueAt(rowIndex, 0));
+				}
+				stmt.setInt(2, invoicesID);
 
 				stmt.executeUpdate();
 			}

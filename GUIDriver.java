@@ -78,6 +78,14 @@ public class GUIDriver
 		{
 			tempGUI = new CustomerInvoicesGUI(emailLoggedIn);
 		}
+		else if (currentGUI.commandString.equals("Admin Add New Product"))
+		{
+			tempGUI = new AdminAddNewProductGUI(emailLoggedIn);
+		}
+		else if (currentGUI.commandString.equals("Admin Update Product"))
+		{
+			tempGUI = new AdminUpdateProductGUI(emailLoggedIn, ((AdminProductsGUI) currentGUI).productID);
+		}
 		else if (tempGUI == null)
 		{
 			// error in gui name
