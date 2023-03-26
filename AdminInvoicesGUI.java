@@ -148,23 +148,19 @@ public class AdminInvoicesGUI extends GeneralGUI
 			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM invoices");
 
 	    	ResultSet result = stmt.executeQuery();
-	    	if (!result.next())
-	    	{
-				result.close();
-				String[][] outData = {{"No Invoices", "", "", "", ""}};
-	    		return outData;
-	    	}
-			else
+			int totalRows = 0;
+			while (result.next())
 			{
-				int totalRows = 0;
-				do
+				if (paidCheckBox != null && ((paidCheckBox.isSelected() && result.getInt("Paid") == 1) || (notPaidCheckBox.isSelected() && result.getInt("Paid") == 0)))
 				{
-					if (paidCheckBox != null && ((paidCheckBox.isSelected() && result.getInt("Paid") == 1) || (notPaidCheckBox.isSelected() && result.getInt("Paid") == 0)))
-					{
-						totalRows += 1;
-					}
-				} while (result.next());
-				String[][] outData = new String[totalRows][5];
+					totalRows += 1;
+				}
+			}
+			
+			String[][] outData = {{"No Invoices", "", "", "", ""}};
+			if (totalRows != 0)
+			{
+				outData = new String[totalRows][];
 				
 				result = stmt.executeQuery();
 				int rowIndex = 0;
@@ -180,8 +176,10 @@ public class AdminInvoicesGUI extends GeneralGUI
 						rowIndex += 1;
 					}
 				}
-	    		return outData;
 			}
+			
+			result.close();
+			return outData;
 		}
 		catch (SQLException e)
 		{

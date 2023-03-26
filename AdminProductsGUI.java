@@ -9,5 +9,6 @@ public class AdminProductsGUI extends GeneralGUI
 	public AdminProductsGUI(String email)
 	{
 		super("Admin Products", email);
+		commandString = "Admin Orders";
 	}
 }
