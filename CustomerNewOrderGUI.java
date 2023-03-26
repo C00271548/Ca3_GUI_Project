@@ -9,5 +9,6 @@ public class CustomerNewOrderGUI extends GeneralGUI
 	public CustomerNewOrderGUI(String email)
 	{
 		super("New Order", email);
+		commandString = "Customer Orders";
 	}
 }

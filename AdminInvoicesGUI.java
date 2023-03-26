@@ -47,7 +47,7 @@ public class AdminInvoicesGUI extends GeneralGUI
 		add(setUpTablePanel(), gridBagConstraints);
 		gridBagConstraints.gridy = 3;
 		gridBagConstraints.insets.bottom = 20;
-		add(setUpToggleButtonPanel(), gridBagConstraints);
+		add(setUpButtonsPanel(), gridBagConstraints);
 	}
 	
 	// set up panel for the filter checkboxes
@@ -116,10 +116,10 @@ public class AdminInvoicesGUI extends GeneralGUI
 	}
 	
 	// set up panel for the toggle button
-	private JPanel setUpToggleButtonPanel()
+	private JPanel setUpButtonsPanel()
 	{
-		JPanel toggleButtonPanel = new JPanel();
-		toggleButtonPanel.setLayout(new GridBagLayout());
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new GridBagLayout());
 		
 		// set up item constraints in the grid
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -134,9 +134,9 @@ public class AdminInvoicesGUI extends GeneralGUI
 				updateTable();
 			}
 		});
-		toggleButtonPanel.add(toggleButton, gridBagConstraints);
+		buttonsPanel.add(toggleButton, gridBagConstraints);
 		
-		return toggleButtonPanel;
+		return buttonsPanel;
 	}
 	
 	// get invoice table info

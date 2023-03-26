@@ -254,8 +254,9 @@ public class GeneralGUI extends JFrame
 	    	}
 			else
 			{
+				int id = result.getInt("CustomerID");
 				result.close();
-	    		return result.getInt("CustomerID");
+	    		return id;
 			}
 		}
 		catch (SQLException e)

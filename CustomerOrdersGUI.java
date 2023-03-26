@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +25,12 @@ public class CustomerOrdersGUI extends GeneralGUI
 {
 	private JPanel tablePanel;
 	
+	private JTable ordersTable;
+	
 	private JCheckBox deliveredCheckBox;
 	private JCheckBox notDeliveredCheckBox;
+	
+	private int selectedRow = -1;
 	
 	// constructor
 	public CustomerOrdersGUI(String email)
@@ -94,7 +100,19 @@ public class CustomerOrdersGUI extends GeneralGUI
 		String[] columnNames = {"Order ID", "Date Ordered", "Customer ID", "Delivered"};
 		String[][] data = getOrdersTableInfo();
 		
-		JTable ordersTable = new JTable(data, columnNames);
+		ordersTable = new JTable(data, columnNames);
+		if (selectedRow != -1)
+		{
+			ordersTable.setRowSelectionInterval(selectedRow, selectedRow);
+		}
+		ordersTable.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				selectedRow = ordersTable.getSelectedRow();
+				updateTable();
+			}
+		});
 		// makes the table not be editable
 		ordersTable.setDefaultEditor(Object.class, null);
 		// sets the cell data to be centered
@@ -104,7 +122,25 @@ public class CustomerOrdersGUI extends GeneralGUI
 		
 		JScrollPane scrollPane = new JScrollPane(ordersTable);
 		ordersTable.setFillsViewportHeight(true);
+		gridBagConstraints.insets.right = 5;
 		tablePanel.add(scrollPane, gridBagConstraints);
+		
+		
+		columnNames = new String[]{"Product ID", "Name", "Description", "Price", "Order Amount"};
+		data = getOrderDetailsTableInfo();
+		
+		JTable orderDetailsTable = new JTable(data, columnNames);
+		// makes the table not be editable
+		orderDetailsTable.setDefaultEditor(Object.class, null);
+		orderDetailsTable.getColumnModel().getColumn(2).setPreferredWidth(120);
+		// sets the cell data to be centered
+		orderDetailsTable.setDefaultRenderer(Object.class, centerRenderer);
+		
+		JScrollPane scrollPane2 = new JScrollPane(orderDetailsTable);
+		orderDetailsTable.setFillsViewportHeight(true);
+		gridBagConstraints.insets.left = 5;
+		gridBagConstraints.insets.right = 0;
+		tablePanel.add(scrollPane2, gridBagConstraints);
 		
 		return tablePanel;
 	}
@@ -116,7 +152,7 @@ public class CustomerOrdersGUI extends GeneralGUI
 		{
 	        // create a statement using the connection
 			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM orders WHERE CustomerID = ?");
-	    	stmt.setInt(1, customerID);
+			stmt.setInt(1, customerID);
 
 	    	ResultSet result = stmt.executeQuery();
 			int totalRows = 0;
@@ -145,6 +181,59 @@ public class CustomerOrdersGUI extends GeneralGUI
 														 convertIntToBooleanToString(result.getInt("Delivered"))};
 						rowIndex += 1;
 					}
+				}
+			}
+			
+			result.close();
+			return outData;
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, e, "SQL Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+	
+	// get order details table info
+	private String[][] getOrderDetailsTableInfo()
+	{
+		try
+		{
+	        // create a statement using the connection
+			PreparedStatement stmt = conn.prepareStatement("""
+															  SELECT * FROM ((orders
+															  INNER JOIN `orders/products` ON orders.OrderID = `orders/products`.OrderID)
+															  INNER JOIN products ON `orders/products`.ProductID = products.ProductID)
+															  WHERE orders.OrderID = ?""");
+			int orderID = 0;
+			if (ordersTable != null && ordersTable.getSelectedRow() != -1 && (String) ordersTable.getValueAt(ordersTable.getSelectedRow(), 0) != "No Orders")
+			{
+				orderID = Integer.parseInt((String) ordersTable.getValueAt(ordersTable.getSelectedRow(), 0));
+			}
+			stmt.setInt(1, orderID);
+
+	    	ResultSet result = stmt.executeQuery();
+			int totalRows = 0;
+			while (result.next())
+			{
+				totalRows += 1;
+			}
+			
+			String[][] outData = {{"", "", "No Order Selected", "", ""}};
+			if (totalRows != 0)
+			{
+				outData = new String[totalRows][];
+				
+				result = stmt.executeQuery();
+				int rowIndex = 0;
+				while (result.next())
+				{
+					outData[rowIndex] = new String[]{result.getString("ProductID"),
+													 result.getString("Name"),
+													 result.getString("Description"),
+													 result.getString("SellingPrice"),
+													 result.getString("OrderAmount")};
+					rowIndex += 1;
 				}
 			}
 			

@@ -117,8 +117,8 @@ public class AdminOrdersGUI extends GeneralGUI
 	// set up panel for the buttons
 	private JPanel setUpButtonsPanel()
 	{
-		JPanel toggleButtonPanel = new JPanel();
-		toggleButtonPanel.setLayout(new GridBagLayout());
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new GridBagLayout());
 		
 		// set up item constraints in the grid
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -135,7 +135,7 @@ public class AdminOrdersGUI extends GeneralGUI
 		});
 		gridBagConstraints.insets.left = 10;
 		gridBagConstraints.insets.right = 5;
-		toggleButtonPanel.add(toggleButton, gridBagConstraints);
+		buttonsPanel.add(toggleButton, gridBagConstraints);
 		
 		JButton deleteButton = new JButton("Delete Order");
 		deleteButton.addActionListener(new ActionListener()
@@ -148,7 +148,7 @@ public class AdminOrdersGUI extends GeneralGUI
 		});
 		gridBagConstraints.insets.left = 5;
 		gridBagConstraints.insets.right = 10;
-		toggleButtonPanel.add(deleteButton, gridBagConstraints);
+		buttonsPanel.add(deleteButton, gridBagConstraints);
 		
 		return toggleButtonPanel;
 	}
