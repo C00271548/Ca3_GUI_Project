@@ -82,7 +82,7 @@ public class SignUpGUI extends GeneralGUI
 		gridBagConstraints.gridy = 6;
 		gridBagConstraints.insets.top = 20;
 		gridBagConstraints.insets.bottom = 20;
-		add(setUpButtonPanel(), gridBagConstraints);
+		add(setUpButtonsPanel(), gridBagConstraints);
 	}
 	
 	// set up the panel for the name
@@ -443,7 +443,7 @@ public class SignUpGUI extends GeneralGUI
 	}
 	
 	// set up the panel for the buttons
-	private JPanel setUpButtonPanel()
+	private JPanel setUpButtonsPanel()
 	{
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridBagLayout());

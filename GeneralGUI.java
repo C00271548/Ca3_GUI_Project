@@ -83,6 +83,20 @@ public class GeneralGUI extends JFrame
 		}
 	}
 	
+	// checks if string is an integer
+    protected boolean checkStringIsInteger(String inString)
+	{
+		try
+		{
+			Integer.parseInt(inString);
+			return true;
+		}
+		catch(NumberFormatException e)
+		{
+			return false;
+		}
+	}
+	
 	// converts int to boolean
     protected boolean convertIntToBoolean(int number)
 	{

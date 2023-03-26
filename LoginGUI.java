@@ -40,7 +40,7 @@ public class LoginGUI extends GeneralGUI
 		gridBagConstraints.gridy = 1;
 		gridBagConstraints.insets.top = 10;
 		gridBagConstraints.insets.bottom = 20;
-		add(setUpButtonPanel(), gridBagConstraints);
+		add(setUpButtonsPanel(), gridBagConstraints);
 	}
 	
 	// sets up the top panel and components for the input
@@ -57,7 +57,7 @@ public class LoginGUI extends GeneralGUI
 		// set up the size for the input fields
 		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
-		JLabel emailLoginLabel = new JLabel("Email:");
+		JLabel emailLoginLabel = new JLabel("Email");
 		gridBagConstraints.insets.bottom = 5;
 		inputPanel.add(emailLoginLabel, gridBagConstraints);
 		
@@ -68,7 +68,7 @@ public class LoginGUI extends GeneralGUI
 		inputPanel.add(emailLoginField, gridBagConstraints);
 		
 		
-		JLabel passwordLoginLabel = new JLabel("Password:");
+		JLabel passwordLoginLabel = new JLabel("Password");
 		gridBagConstraints.gridy = 2;
 		gridBagConstraints.insets.bottom = 5;
 		inputPanel.add(passwordLoginLabel, gridBagConstraints);
@@ -83,7 +83,7 @@ public class LoginGUI extends GeneralGUI
 	}
 	
 	// sets up the bottom panel and components for the buttons
-	private JPanel setUpButtonPanel()
+	private JPanel setUpButtonsPanel()
 	{
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridBagLayout());
