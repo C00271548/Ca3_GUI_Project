@@ -100,23 +100,27 @@ public class SignUpGUI extends GeneralGUI
 		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel forenameLabel = new JLabel("Forename*");
+		gridBagConstraints.insets.bottom = 5;
 		namePanel.add(forenameLabel, gridBagConstraints);
 		
 		forenameField = new JTextField();
 		forenameField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.bottom = 0;
 		namePanel.add(forenameField, gridBagConstraints);
 		
 		JLabel surnameLabel = new JLabel("Surname*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets.left = 10;
+		gridBagConstraints.insets.bottom = 5;
 		namePanel.add(surnameLabel, gridBagConstraints);
 		
 		surnameField = new JTextField();
 		surnameField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.bottom = 0;
 		namePanel.add(surnameField, gridBagConstraints);
 		
 		return namePanel;
@@ -137,23 +141,27 @@ public class SignUpGUI extends GeneralGUI
 		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel passwordLabel = new JLabel("Password*");
+		gridBagConstraints.insets.bottom = 5;
 		passwordPanel.add(passwordLabel, gridBagConstraints);
 		
 		passwordField = new JPasswordField();
 		passwordField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.bottom = 0;
 		passwordPanel.add(passwordField, gridBagConstraints);
 		
 		JLabel confirmPasswordLabel = new JLabel("Confirm Password*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets.left = 10;
+		gridBagConstraints.insets.bottom = 5;
 		passwordPanel.add(confirmPasswordLabel, gridBagConstraints);
 		
 		confirmPasswordField = new JPasswordField();
 		confirmPasswordField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.bottom = 0;
 		passwordPanel.add(confirmPasswordField, gridBagConstraints);
 		
 		return passwordPanel;
@@ -174,23 +182,27 @@ public class SignUpGUI extends GeneralGUI
 		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel emailLabel = new JLabel("Email*");
+		gridBagConstraints.insets.bottom = 5;
 		emailPanel.add(emailLabel, gridBagConstraints);
 		
 		emailField = new JTextField();
 		emailField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.bottom = 0;
 		emailPanel.add(emailField, gridBagConstraints);
 		
 		JLabel confirmEmailLabel = new JLabel("Confirm Email*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets.left = 10;
+		gridBagConstraints.insets.bottom = 5;
 		emailPanel.add(confirmEmailLabel, gridBagConstraints);
 		
 		confirmEmailField = new JTextField();
 		confirmEmailField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.bottom = 0;
 		emailPanel.add(confirmEmailField, gridBagConstraints);
 		
 		return emailPanel;
@@ -211,6 +223,7 @@ public class SignUpGUI extends GeneralGUI
 		DimensionUIResource preferredSize = new DimensionUIResource(100, 25);
 		
 		JLabel phoneNumberLabel = new JLabel("Phone Number");
+		gridBagConstraints.insets.bottom = 5;
 		phonePanel.add(phoneNumberLabel, gridBagConstraints);
 		
 		// formats the input according to the mask string
@@ -259,16 +272,19 @@ public class SignUpGUI extends GeneralGUI
 		phoneNumberField.setHorizontalAlignment(JTextField.CENTER);
 		phoneNumberField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.bottom = 0;
 		phonePanel.add(phoneNumberField, gridBagConstraints);
 		
 		JLabel phoneTypeLabel = new JLabel("Phone Type");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets.left = 10;
+		gridBagConstraints.insets.bottom = 5;
 		phonePanel.add(phoneTypeLabel, gridBagConstraints);
 		
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets.bottom = 0;
 		phonePanel.add(setUpPhoneRadioButtonPanel(), gridBagConstraints);
 		
 		return phonePanel;
@@ -335,6 +351,7 @@ public class SignUpGUI extends GeneralGUI
 		DimensionUIResource preferredSize = new DimensionUIResource(170, 25);
 		
 		JLabel addressLabel = new JLabel("Address");
+		gridBagConstraints.insets.bottom = 5;
 		addressPanel.add(addressLabel, gridBagConstraints);
 		
 		JLabel addressNameLabel = new JLabel("Name/Number*");
@@ -344,10 +361,12 @@ public class SignUpGUI extends GeneralGUI
 		addressNameField = new JTextField();
 		addressNameField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 2;
+		gridBagConstraints.insets.bottom = 0;
 		addressPanel.add(addressNameField, gridBagConstraints);
 
 		JLabel addressCountryLabel = new JLabel("Country*");
 		gridBagConstraints.gridy = 3;
+		gridBagConstraints.insets.bottom = 5;
 		addressPanel.add(addressCountryLabel, gridBagConstraints);
 		
 		String[] countriesArray = {"", "Great Britain", "Ireland", "Northern Ireland", "United States of America"};
@@ -370,21 +389,25 @@ public class SignUpGUI extends GeneralGUI
 			}
 		});
 		gridBagConstraints.gridy = 4;
+		gridBagConstraints.insets.bottom = 0;
 		addressPanel.add(addressCountryComboBox, gridBagConstraints);
 		
 		JLabel addressStreetLabel = new JLabel("Street*");
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
 		gridBagConstraints.insets.left = 10;
+		gridBagConstraints.insets.bottom = 5;
 		addressPanel.add(addressStreetLabel, gridBagConstraints);
 		
 		addressStreetField = new JTextField();
 		addressStreetField.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 2;
+		gridBagConstraints.insets.bottom = 0;
 		addressPanel.add(addressStreetField, gridBagConstraints);
 		
 		JLabel addressCountyLabel = new JLabel("Irish County*");
 		gridBagConstraints.gridy = 3;
+		gridBagConstraints.insets.bottom = 5;
 		addressPanel.add(addressCountyLabel, gridBagConstraints);
 		
 		String[] countiesArray = {"", "Antrim", "Armagh", "Carlow", "Cavan", "Clare", "Cork", "Donegal", "Down", "Dublin", "Fermanagh", "Galway", "Kerry", "Kildare", "Kilkenny", "Laois", "Leitrim", "Limerick", "Londonderry", "Longford", "Louth", "Mayo", "Meath", "Monaghan", "Offaly", "Roscommon", "Sligo", "Tiggerary", "Tyrone", "Waterford", "Westmeath", "Wexford", "Wicklow"};
@@ -408,6 +431,7 @@ public class SignUpGUI extends GeneralGUI
 		});
 		addressCountyComboBox.setEnabled(false);
 		gridBagConstraints.gridy = 4;
+		gridBagConstraints.insets.bottom = 0;
 		addressPanel.add(addressCountyComboBox, gridBagConstraints);
 		
 		dublinPostalCodeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 24, 1));
