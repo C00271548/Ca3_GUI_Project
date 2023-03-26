@@ -6,8 +6,8 @@ public class AdminProductsGUI extends GeneralGUI
 {
 
 	// constructor
-	public AdminProductsGUI()
+	public AdminProductsGUI(String email)
 	{
-		super("Admin Products");
+		super("Admin Products", email);
 	}
 }

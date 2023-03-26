@@ -21,12 +21,12 @@ import javax.swing.JButton;
 public class LoginGUI extends GeneralGUI
 {
 	public JTextField emailLoginField;
-	public JPasswordField passwordLoginField;
+	private JPasswordField passwordLoginField;
 	
 	// constructor
 	public LoginGUI()
 	{
-		super("Login");
+		super("Login", "");
 		
 		getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -131,7 +131,7 @@ public class LoginGUI extends GeneralGUI
 		return buttonsPanel;
 	}
 	
-	// chesk if the input data matches a row in the database
+	// check if the input data matches a row in the database
 	private boolean checkLogin()
 	{
 		try

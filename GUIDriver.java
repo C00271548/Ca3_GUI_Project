@@ -12,7 +12,7 @@ public class GUIDriver
 	public static void main(String[] args)
     {
 		// initialise login screen
-		currentGUI  = new GeneralGUI("Temp");
+		currentGUI  = new GeneralGUI("Temp", "");
 		currentGUI.commandString = "Login";
 		initialiseNewGUI();
 		while (true)
@@ -48,12 +48,15 @@ public class GUIDriver
 		}
 		else if (currentGUI.commandString.equals("Admin Products"))
 		{
-			tempGUI = new AdminProductsGUI();
-			emailLoggedIn = ((LoginGUI) currentGUI).emailLoginField.getText();
+			tempGUI = new AdminProductsGUI(emailLoggedIn);
+			if (currentGUI instanceof LoginGUI)
+			{
+				emailLoggedIn = ((LoginGUI) currentGUI).emailLoginField.getText();
+			}
 		}
 		else if (currentGUI.commandString.equals("New Order"))
 		{
-			tempGUI = new CustomerNewOrderGUI();
+			tempGUI = new CustomerNewOrderGUI(emailLoggedIn);
 			if (currentGUI instanceof LoginGUI)
 			{
 				emailLoggedIn = ((LoginGUI) currentGUI).emailLoginField.getText();
@@ -61,23 +64,19 @@ public class GUIDriver
 		}
 		else if (currentGUI.commandString.equals("Admin Orders"))
 		{
-			tempGUI = new AdminOrdersGUI();
-			if (currentGUI instanceof LoginGUI)
-			{
-				emailLoggedIn = ((LoginGUI) currentGUI).emailLoginField.getText();
-			}
+			tempGUI = new AdminOrdersGUI(emailLoggedIn);
 		}
 		else if (currentGUI.commandString.equals("Customer Orders"))
 		{
-			tempGUI = new CustomerOrdersGUI();
+			tempGUI = new CustomerOrdersGUI(emailLoggedIn);
 		}
 		else if (currentGUI.commandString.equals("Admin Invoices"))
 		{
-			tempGUI = new AdminInvoicesGUI();
+			tempGUI = new AdminInvoicesGUI(emailLoggedIn);
 		}
 		else if (currentGUI.commandString.equals("Customer Invoices"))
 		{
-			tempGUI = new CustomerInvoicesGUI();
+			tempGUI = new CustomerInvoicesGUI(emailLoggedIn);
 		}
 		else if (tempGUI == null)
 		{

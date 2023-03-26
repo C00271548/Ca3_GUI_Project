@@ -6,8 +6,8 @@ public class AdminInvoicesGUI extends GeneralGUI
 {
 	
 	//constructor
-	public AdminInvoicesGUI()
+	public AdminInvoicesGUI(String email)
 	{
-		super("Admin Invoices");
+		super("Admin Invoices", email);
 	}
 }

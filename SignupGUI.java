@@ -33,32 +33,32 @@ import javax.swing.JFormattedTextField;
 public class SignUpGUI extends GeneralGUI
 {
 	// gui component variables
-	public JTextField forenameField;
-	public JTextField surnameField;
+	private JTextField forenameField;
+	private JTextField surnameField;
 	
-	public JPasswordField passwordField;
-	public JPasswordField confirmPasswordField;
+	private JPasswordField passwordField;
+	private JPasswordField confirmPasswordField;
 	
-	public JTextField emailField;
-	public JTextField confirmEmailField;
+	private JTextField emailField;
+	private JTextField confirmEmailField;
 	
-	public JFormattedTextField phoneNumberField;
-	public JRadioButton landlineButton;
-	public JRadioButton mobilePhoneButton;
+	private JFormattedTextField phoneNumberField;
+	private JRadioButton landlineButton;
+	private JRadioButton mobilePhoneButton;
 	
-	public JCheckBox emailContactCheckBox;
-	public JCheckBox phoneContactCheckBox;
+	private JCheckBox emailContactCheckBox;
+	private JCheckBox phoneContactCheckBox;
 	
-	public JTextField addressNameField;
-	public JComboBox<String> addressCountryComboBox;
-	public JTextField addressStreetField;
-	public JComboBox<String> addressCountyComboBox;
-	public JSpinner dublinPostalCodeSpinner;
+	private JTextField addressNameField;
+	private JComboBox<String> addressCountryComboBox;
+	private JTextField addressStreetField;
+	private JComboBox<String> addressCountyComboBox;
+	private JSpinner dublinPostalCodeSpinner;
 	
 	// constructor
 	public SignUpGUI()
 	{
-		super("Sign Up");
+		super("Sign Up", "");
 		
 		getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();

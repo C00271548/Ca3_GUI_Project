@@ -6,8 +6,8 @@ public class CustomerNewOrderGUI extends GeneralGUI
 {
 
 	// constructor
-	public CustomerNewOrderGUI()
+	public CustomerNewOrderGUI(String email)
 	{
-		super("New Order");
+		super("New Order", email);
 	}
 }
