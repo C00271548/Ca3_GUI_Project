@@ -101,11 +101,11 @@ public class GeneralGUI extends JFrame
     {
     	if (convertIntToBoolean(number))
     	{
-    		return "True";
+    		return "Yes";
     	}
     	else
     	{
-    		return "False";
+    		return "No";
     	}
     }
     

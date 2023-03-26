@@ -30,7 +30,7 @@ public class ConnectTest
     {
 		try
 		{
-	        // create a Statement from the connection
+	        // create a statement using the connection
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO testing(`First Name`, `Last Name`, `Address`) VALUES (?, ?, ?)");
 	    	stmt.setString(1, values[0]);
 	    	stmt.setString(2, values[1]);
@@ -50,7 +50,7 @@ public class ConnectTest
     {
 		try
 		{
-	        // create a Statement from the connection
+	        // create a statement using the connection
 			PreparedStatement stmt = conn.prepareStatement("UPDATE testing SET `Last Name` = ? WHERE ID = ?");
 	    	stmt.setString(1, values[0]);
 	    	stmt.setInt(2, Integer.parseInt(values[1]));
@@ -69,7 +69,7 @@ public class ConnectTest
     {
 		try
 		{
-	        // create a Statement from the connection
+	        // create a statement using the connection
 			PreparedStatement stmt = conn.prepareStatement("DELETE FROM testing WHERE ID = ?");
 	    	stmt.setInt(1, id);
 	    	
@@ -87,7 +87,7 @@ public class ConnectTest
     {
 		try
 		{
-	        // create a Statement from the connection
+	        // create a statement using the connection
 			PreparedStatement stmt = conn.prepareStatement("SELECT ID, `First Name`, `Last Name`, `Address` FROM testing WHERE ID = ?");
 	    	stmt.setInt(1, id);
 	    	

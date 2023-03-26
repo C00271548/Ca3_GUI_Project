@@ -39,39 +39,10 @@ public class CustomerInvoicesGUI extends GeneralGUI
 
 		add(setUpTopCustomerNavBar(), gridBagConstraints);
 		gridBagConstraints.gridy = 1;
-		add(setUpTablePanel(), gridBagConstraints);
+		add(setUpFilterCheckboxes(), gridBagConstraints);
 		gridBagConstraints.gridy = 2;
 		gridBagConstraints.insets.bottom = 20;
-		add(setUpFilterCheckboxes(), gridBagConstraints);
-	}
-	
-	// set up panel for the table
-	private JPanel setUpTablePanel()
-	{
-		tablePanel = new JPanel();
-		tablePanel.setLayout(new GridBagLayout());
-		
-		// set up item constraints in the grid
-		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		// gridBagConstraints.insets is used for margins
-		
-		String[] columnNames = {"Invoice ID", "Total Cost Amount", "Customer ID", "Order ID", "Paid"};
-		String[][] data = getInvoiceTableInfo();
-		
-		JTable invoicesTable = new JTable(data, columnNames);
-		// makes the table not be editable
-		invoicesTable.setDefaultEditor(Object.class, null);
-		invoicesTable.getColumnModel().getColumn(1).setPreferredWidth(120);
-		// sets the cell data to be centered
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		invoicesTable.setDefaultRenderer(Object.class, centerRenderer);
-		
-		JScrollPane scrollPane = new JScrollPane(invoicesTable);
-		invoicesTable.setFillsViewportHeight(true);
-		tablePanel.add(scrollPane, gridBagConstraints);
-		
-		return tablePanel;
+		add(setUpTablePanel(), gridBagConstraints);
 	}
 	
 	// set up panel for the filter checkboxes
@@ -107,8 +78,36 @@ public class CustomerInvoicesGUI extends GeneralGUI
 		});
 		filterCheckboxesPanel.add(notPaidCheckBox, gridBagConstraints);
 		
-		
 		return filterCheckboxesPanel;
+	}
+	
+	// set up panel for the table
+	private JPanel setUpTablePanel()
+	{
+		tablePanel = new JPanel();
+		tablePanel.setLayout(new GridBagLayout());
+		
+		// set up item constraints in the grid
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		// gridBagConstraints.insets is used for margins
+		
+		String[] columnNames = {"Invoice ID", "Total Cost Amount", "Customer ID", "Order ID", "Paid"};
+		String[][] data = getInvoiceTableInfo();
+		
+		JTable invoicesTable = new JTable(data, columnNames);
+		// makes the table not be editable
+		invoicesTable.setDefaultEditor(Object.class, null);
+		invoicesTable.getColumnModel().getColumn(1).setPreferredWidth(120);
+		// sets the cell data to be centered
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		invoicesTable.setDefaultRenderer(Object.class, centerRenderer);
+		
+		JScrollPane scrollPane = new JScrollPane(invoicesTable);
+		invoicesTable.setFillsViewportHeight(true);
+		tablePanel.add(scrollPane, gridBagConstraints);
+		
+		return tablePanel;
 	}
 	
 	// get invoice table info
@@ -118,7 +117,7 @@ public class CustomerInvoicesGUI extends GeneralGUI
 		{
 	        // create a statement using the connection
 			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM invoices WHERE CustomerID = ?");
-	    	stmt.setInt(1, 2);
+	    	stmt.setInt(1, customerID);
 
 	    	ResultSet result = stmt.executeQuery();
 	    	if (!result.next())
@@ -171,7 +170,7 @@ public class CustomerInvoicesGUI extends GeneralGUI
 		gridBagConstraints.insets.top = 20;
 		gridBagConstraints.insets.left = 20;
 		gridBagConstraints.insets.right = 20;
-		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridy = 2;
 		
 		add(setUpTablePanel(), gridBagConstraints);
 		pack();
