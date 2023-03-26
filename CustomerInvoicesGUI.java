@@ -92,7 +92,7 @@ public class CustomerInvoicesGUI extends GeneralGUI
 		// gridBagConstraints.insets is used for margins
 		
 		String[] columnNames = {"Invoice ID", "Total Cost Amount", "Customer ID", "Order ID", "Paid"};
-		String[][] data = getInvoiceTableInfo();
+		String[][] data = getInvoicesTableInfo();
 		
 		JTable invoicesTable = new JTable(data, columnNames);
 		// makes the table not be editable
@@ -110,8 +110,8 @@ public class CustomerInvoicesGUI extends GeneralGUI
 		return tablePanel;
 	}
 	
-	// get invoice table info
-	private String[][] getInvoiceTableInfo()
+	// get invoices table info
+	private String[][] getInvoicesTableInfo()
 	{
 		try
 		{
@@ -120,23 +120,19 @@ public class CustomerInvoicesGUI extends GeneralGUI
 	    	stmt.setInt(1, customerID);
 
 	    	ResultSet result = stmt.executeQuery();
-	    	if (!result.next())
-	    	{
-				result.close();
-				String[][] outData = {{"No Invoices", "", "", "", ""}};
-	    		return outData;
-	    	}
-			else
+			int totalRows = 0;
+			while (result.next())
 			{
-				int totalRows = 0;
-				do
+				if (paidCheckBox != null && ((paidCheckBox.isSelected() && result.getInt("Paid") == 1) || (notPaidCheckBox.isSelected() && result.getInt("Paid") == 0)))
 				{
-					if (paidCheckBox != null && ((paidCheckBox.isSelected() && result.getInt("Paid") == 1) || (notPaidCheckBox.isSelected() && result.getInt("Paid") == 0)))
-					{
-						totalRows += 1;
-					}
-				} while (result.next());
-				String[][] outData = new String[totalRows][5];
+					totalRows += 1;
+				}
+			}
+			
+			String[][] outData = {{"No Invoices", "", "", "", ""}};
+			if (totalRows != 0)
+			{
+				outData = new String[totalRows][];
 				
 				result = stmt.executeQuery();
 				int rowIndex = 0;
@@ -152,8 +148,10 @@ public class CustomerInvoicesGUI extends GeneralGUI
 						rowIndex += 1;
 					}
 				}
-	    		return outData;
 			}
+			
+			result.close();
+			return outData;
 		}
 		catch (SQLException e)
 		{
@@ -170,6 +168,7 @@ public class CustomerInvoicesGUI extends GeneralGUI
 		gridBagConstraints.insets.top = 20;
 		gridBagConstraints.insets.left = 20;
 		gridBagConstraints.insets.right = 20;
+		gridBagConstraints.insets.bottom = 20;
 		gridBagConstraints.gridy = 2;
 		
 		add(setUpTablePanel(), gridBagConstraints);
