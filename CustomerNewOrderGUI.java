@@ -9,8 +9,8 @@ import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -142,7 +142,7 @@ public class CustomerNewOrderGUI extends GeneralGUI
 			totalPrice += Double.parseDouble(productData[5]);
 		}
 		
-		JLabel totalPriceLabel = new JLabel(String.valueOf(totalPrice));
+		totalPriceLabel = new JLabel(String.valueOf(totalPrice));
 		gridBagConstraints.insets.left = 5;
 		gridBagConstraints.insets.right = 10;
 		totalPriceLabelPanel.add(totalPriceLabel, gridBagConstraints);
@@ -278,11 +278,13 @@ public class CustomerNewOrderGUI extends GeneralGUI
 		try
 		{
 	        // create a statement using the connection
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO orders (DateOrdered, CustomerID) VALUES (?, ?)");
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO orders (DateOrdered, CustomerID, Delivered) VALUES (?, ?, ?)");
 	    	
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			stmt.setString(1, df.format(LocalDateTime.now()));
+			// formats the date for the database
+			LocalDateTime localDateTime = LocalDateTime.now();
+			stmt.setString(1, localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 	    	stmt.setInt(2, customerID);
+			stmt.setInt(3, 0);
 			
 	    	stmt.executeUpdate();
 			
@@ -311,19 +313,22 @@ public class CustomerNewOrderGUI extends GeneralGUI
 				
 				stmt.setInt(1, orderID);
 				stmt.setString(2, productData[0]);
-				stmt.setString(2, productData[4]);
+				stmt.setString(3, productData[4]);
 				
 				stmt.executeUpdate();
 			}
 			
 			// create a statement using the connection
-			stmt = conn.prepareStatement("INSERT INTO invoices (TotalCostAmount, CustomerID, OrderID) VALUES (?, ?, ?)");
+			stmt = conn.prepareStatement("INSERT INTO invoices (TotalCostAmount, CustomerID, OrderID, Paid) VALUES (?, ?, ?, ?)");
 			
 			stmt.setDouble(1, Double.parseDouble(totalPriceLabel.getText()));
 			stmt.setInt(2, customerID);
-			stmt.setInt(2, orderID);
+			stmt.setInt(3, orderID);
+			stmt.setInt(4, 0);
 			
 			stmt.executeUpdate();
+			
+			orderProductsData = null;
 		}
 		catch (SQLException e)
 		{

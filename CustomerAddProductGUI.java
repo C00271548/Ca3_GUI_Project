@@ -108,6 +108,8 @@ public class CustomerAddProductGUI extends GeneralGUI
 				commandString = "Customer New Order";
 			}
 		});
+		gridBagConstraints.insets.left = 10;
+		gridBagConstraints.insets.right = 5;
 		buttonsPanel.add(cancelButton, gridBagConstraints);
 		
 		JButton signUpButton = new JButton("Add Product");
@@ -123,7 +125,8 @@ public class CustomerAddProductGUI extends GeneralGUI
 			}
 		});
 		gridBagConstraints.gridx = 1;
-		gridBagConstraints.insets.left = 60;
+		gridBagConstraints.insets.left = 5;
+		gridBagConstraints.insets.right = 10;
 		buttonsPanel.add(signUpButton, gridBagConstraints);
 		
 		return buttonsPanel;
@@ -217,7 +220,7 @@ public class CustomerAddProductGUI extends GeneralGUI
 			productData[index2] = allProductsData[productsComboBox.getSelectedIndex()][index2];
 		}
 		productData[4] = orderAmountField.getText();
-		productData[5] = String.valueOf(Double.parseDouble(orderAmountField.getText()) * Integer.parseInt(productData[4]));
+		productData[5] = String.valueOf(Integer.parseInt(orderAmountField.getText()) * Double.parseDouble(productData[3]));
 		tempData[index] = productData;
 		
 		orderProductsData = tempData;

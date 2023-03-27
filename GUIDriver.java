@@ -40,6 +40,18 @@ public class GUIDriver
 	// make new gui screen
 	private static void initialiseNewGUI()
 	{
+		// sets the orderProducsData
+		if (currentGUI != null)
+		{
+			if (currentGUI instanceof CustomerNewOrderGUI)
+			{
+				orderProductsData = ((CustomerNewOrderGUI) currentGUI).orderProductsData;
+			}
+			else if (currentGUI instanceof CustomerAddProductGUI)
+			{
+				orderProductsData = ((CustomerAddProductGUI) currentGUI).orderProductsData;
+			}
+		}
 		GeneralGUI tempGUI = null;
 		if (currentGUI.commandString.equals("Login"))
 		{
@@ -126,7 +138,6 @@ public class GUIDriver
 		tempGUI.setLocation(newX, location.y);
 		tempGUI.setVisible(true);
 		
-		flip this here
 		// close old gui
 		if (currentGUI != null)
 		{

@@ -138,7 +138,7 @@ public class GeneralGUI extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				commandString = "New Order";
+				commandString = "Customer New Order";
 			}
 		});
 		gridBagConstraints.insets.left = 10;
