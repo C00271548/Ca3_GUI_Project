@@ -190,8 +190,11 @@ public class CustomerNewOrderGUI extends GeneralGUI
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				finishOrder();
-				commandString = "Customer New Order";
+				if (orderProductsData != null && !orderProductsData[0][0].equals("No Products"))
+				{
+					finishOrder();
+					commandString = "Customer New Order";
+				}
 			}
 		});
 		gridBagConstraints.insets.left = 5;

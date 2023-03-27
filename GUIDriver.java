@@ -126,6 +126,7 @@ public class GUIDriver
 		tempGUI.setLocation(newX, location.y);
 		tempGUI.setVisible(true);
 		
+		flip this here
 		// close old gui
 		if (currentGUI != null)
 		{

@@ -32,7 +32,7 @@ public class CustomerAddProductGUI extends GeneralGUI
 	{
 		super("Add Product", email);
 		
-		if (previousData[0][0].equals("No Products"))
+		if (previousData == null || previousData[0][0].equals("No Products"))
 		{
 			orderProductsData = null;
 		}
@@ -71,6 +71,7 @@ public class CustomerAddProductGUI extends GeneralGUI
 		dataPanel.add(productLabel, gridBagConstraints);
 		
 		productsComboBox = new JComboBox<String>(getProductsInfo());
+		productsComboBox.setPreferredSize(preferredSize);
 		gridBagConstraints.gridy = 1;
 		gridBagConstraints.insets.bottom = 10;
 		dataPanel.add(productsComboBox, gridBagConstraints);
@@ -104,7 +105,7 @@ public class CustomerAddProductGUI extends GeneralGUI
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				commandString = "Customer Add Order";
+				commandString = "Customer New Order";
 			}
 		});
 		buttonsPanel.add(cancelButton, gridBagConstraints);
@@ -117,7 +118,7 @@ public class CustomerAddProductGUI extends GeneralGUI
 				if (checkAllInputsCorrect())
 				{
 					addProduct();
-					commandString = "Customer Add Order";
+					commandString = "Customer New Order";
 				}
 			}
 		});
@@ -200,11 +201,15 @@ public class CustomerAddProductGUI extends GeneralGUI
 	// adds a product into the orderProductsData array
 	private void addProduct()
 	{
-		String[][] tempData = new String[orderProductsData.length + 1][];
 		int index = 0;
-		for (index = 0; index < orderProductsData.length; index++)
+		String[][] tempData = new String[1][];
+		if (orderProductsData != null)
 		{
-			tempData[index] = orderProductsData[index];
+			tempData = new String[orderProductsData.length + 1][];
+			for (index = 0; index < orderProductsData.length; index++)
+			{
+				tempData[index] = orderProductsData[index];
+			}
 		}
 		String[] productData = new String[6];
 		for (int index2 = 0; index2 < 4; index2++)
