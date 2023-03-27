@@ -180,34 +180,17 @@ public class CustomerAddProductGUI extends GeneralGUI
 	private boolean checkAllInputsCorrect()
 	{
 		// checks if all of the required fields have been input
-		if (nameField.getText().length() == 0 ||
-			descriptionTextArea.getText().length() == 0 ||
-			stockAmountField.getText().length() == 0 ||
-			sellingPriceField.getText().length() == 0 ||
-			reorderLevelField.getText().length() == 0)
+		if (productsComboBox.getSelectedIndex() == -1 ||
+			orderAmountField.getText().length() == 0)
 		{
 			JOptionPane.showMessageDialog(null, "Input all fields!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
 		// checks if stock amount correct
-		if (!checkStringIsInteger(stockAmountField.getText()))
+		if (!checkStringIsInteger(orderAmountField.getText()))
 		{
-			JOptionPane.showMessageDialog(null, "Stock Amount not correct!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		aaa
-		// checks if selling price correct
-		if (!checkStringIsDouble(sellingPriceField.getText()))
-		{
-			JOptionPane.showMessageDialog(null, "Selling Price not correct!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		
-		// checks if reorder level correct
-		if (!checkStringIsInteger(reorderLevelField.getText()))
-		{
-			JOptionPane.showMessageDialog(null, "Reorder Level not correct!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Order Amount not correct!", "Incorrect Input", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
