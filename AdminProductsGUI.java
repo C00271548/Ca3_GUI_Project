@@ -172,6 +172,10 @@ public class AdminProductsGUI extends GeneralGUI
 			}
 			
 			String[][] outData = {{"No Products", "", "", "", "", ""}};
+			if (selectedRow >= totalRows)
+			{
+				selectedRow = totalRows - 1;
+			}
 			if (totalRows != 0)
 			{
 				outData = new String[totalRows][];

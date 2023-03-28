@@ -205,6 +205,10 @@ public class AdminOrdersGUI extends GeneralGUI
 			}
 			
 			String[][] outData = {{"No Orders", "", "", ""}};
+			if (selectedRow >= totalRows)
+			{
+				selectedRow = totalRows - 1;
+			}
 			if (totalRows != 0)
 			{
 				outData = new String[totalRows][];
@@ -260,6 +264,10 @@ public class AdminOrdersGUI extends GeneralGUI
 			}
 			
 			String[][] outData = {{"", "", "No Order Selected", "", ""}};
+			if (selectedRow >= totalRows)
+			{
+				selectedRow = totalRows - 1;
+			}
 			if (totalRows != 0)
 			{
 				outData = new String[totalRows][];
