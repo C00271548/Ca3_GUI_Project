@@ -180,6 +180,7 @@ public class CustomerNewOrderGUI extends GeneralGUI
 				if (orderTable != null && orderTable.getSelectedRow() != -1 && (String) orderTable.getValueAt(orderTable.getSelectedRow(), 0) != "No Products")
 				{
 					removeRowFromData();
+					commandString = "Customer New Order";
 				}
 			}
 		});
@@ -269,7 +270,14 @@ public class CustomerNewOrderGUI extends GeneralGUI
 			}
 		}
 		
-		orderProductsData = tempData;
+		if (orderProductsData.length == 1)
+		{
+			orderProductsData = new String[][]{{"No Products", "", "", "", "", ""}};
+		}
+		else
+		{
+			orderProductsData = tempData;
+		}
 	}
 	
 	// saves the order in the database
